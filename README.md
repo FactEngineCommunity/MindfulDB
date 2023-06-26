@@ -24,10 +24,10 @@ MindfulDB simply uses EDGE LABELS in the comment section of your otherwise relat
 # What are the steps involved to get MindfulDB up and running?
 
 1. Download a copy of Boston from www.FactEngine.ai;
-2. Add the EDGE LABELS for all Edge Types in the schema and save it
+2. Add the EDGE LABELS for all Edge Types in the schema and save it.
       Reverse engineer the schema of your otherwise relational database in Boston to get a Property Graph Schema and a Entity Relationship Diagram of your schema;
       Save the EDGE LABELS to the comments on your otherwise relational database schema (as JSON in the comments);
-3. Download and start using the MindfulDB DLLs (Direct Link Libraries) to write Cypher queries against your now graph relational database.
+4. Download and start using the MindfulDB DLLs (Direct Link Libraries) to write Cypher queries against your now graph relational database.
 
 # Software Languages/Platforms Supported
 
