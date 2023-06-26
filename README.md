@@ -1,5 +1,9 @@
 # MindfulDB
 Graph Relational DBMS
-![MindfulDB](https://github.com/FactEngineCommunity/MindfulDB/assets/10895608/df16c74f-9386-4eab-8887-65d4c5f57a12)
 
+![image](https://github.com/FactEngineCommunity/MindfulDB/assets/10895608/42af2d95-83b7-4afb-86b1-8d11c6cfc9c3)
+
+<p align="center">
+  <img src="https://github.com/FactEngineCommunity/MindfulDB/assets/10895608/42af2d95-83b7-4afb-86b1-8d11c6cfc9c3" />
+</p>
 
