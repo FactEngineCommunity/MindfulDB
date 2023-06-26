@@ -19,7 +19,7 @@ SQL + Cypher on your MindfulDB.
 
 # How does MindfulDB Work?
 
-MindfulDB simply uses EDGE LABELS injected into the comment section of your otherwise relational database schema so that Cypher queries can be run over your otherwise relational database.
+MindfulDB simply uses EDGE LABELS in the comment section of your otherwise relational database schema so that Cypher queries can be run over your otherwise relational database.
 
 # What are the steps involved to get MindfulDB up and running?
 
