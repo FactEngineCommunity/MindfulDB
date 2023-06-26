@@ -29,3 +29,11 @@ MindfulDB simply uses EDGE LABELS injected into the comment section of your othe
       Save the EDGE LABELS to the comments on your otherwise relational database schema (as JSON in the comments);
 3. Download and start using the MindfulDB DLLs (Direct Link Libraries) to write Cypher queries against your now graph relational database.
 
+**Software Languages/Platforms Supported**
+
+Any software language/platform that supports DLLs (Direct Link Libraries) at this stage;
+
+**Database Supported**
+
+SQLite at this stage
+
