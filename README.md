@@ -13,9 +13,9 @@ MindfulDB turns your otherwise relational database into a **graph relational dat
 
 MindfulDB is realisation of graph relational paradigm by extending your existing relational database to act as if a graph database from a query perspective.
 
-Without changing anything about your relational schema MindfulDB empowers you to perform Cypher queries over your database with the minimum of fuss.
+Without changing anything about your relational schema MindfulDB empowers you to perform openCypher queries over your database with the minimum of fuss.
 
-SQL + Cypher on your MindfulDB.
+SQL + openCypher on your MindfulDB.
 
 # How does MindfulDB Work?
 
