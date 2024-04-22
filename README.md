@@ -7,7 +7,7 @@ Graph Relational DBMS
 
 # Who | What is MindfulDB?
 
-MindfulDB = Cypher over your otherwise relational database.
+MindfulDB = openCypher over your otherwise relational database. E.g. Run openCypher queries over your SQLite database.
 
 MindfulDB turns your otherwise relational database into a **graph relational database**.
 
