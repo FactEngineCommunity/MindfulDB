@@ -1,0 +1,126 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+MindfulDB
+</name>
+</assembly>
+<members>
+<member name="T:MindfulDB.My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:MindfulDB.My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:MindfulDB.My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="M:MindfulDB.Database.GenericRecordset.#ctor">
+ <summary>
+ Parameterless Constructor
+ </summary>
+</member>
+<member name="M:MindfulDB.SQLite.Recordset.#ctor">
+ <summary>
+ Parameterless Constructor
+ </summary>
+</member>
+<member name="M:MindfulDB.RecordsetProxy.#ctor">
+ <summary>
+ Paramerless Constructor
+ </summary>
+</member>
+<member name="M:MindfulDB.MindfulDB.MindfulDB.#ctor">
+ <summary>
+ Parameerless Constructor
+ </summary>
+</member>
+<member name="F:MindfulDB.ODBCDatabaseReverseEngineer.TempModel">
+ <summary>
+ The RDS structure, from the database, is first mapped to this model.
+   NB Have to do this because creating the ModelElements in Me.Model will actually create the RDS structure for that Model.
+   The database structure is first loaded into TempModel, then the ModelElements created in Me.Model from TempModel.
+ </summary>
+</member>
+<member name="F:MindfulDB.ODBCDatabaseReverseEngineer.CreatePagePerTable">
+ <summary>
+ True if the user elects to create a Page in the Model for each Table.
+ </summary>
+</member>
+<member name="M:MindfulDB.ODBCDatabaseReverseEngineer.#ctor(FactEngineForServices.FBM.Model@,System.String,System.Boolean,System.ComponentModel.BackgroundWorker@,System.Boolean)">
+ <summary>
+ Constructor.
+ </summary>
+ <param name="arModel"></param>
+</member>
+<member name="M:MindfulDB.ODBCDatabaseReverseEngineer.ReverseEngineerDatabase(System.String@,System.Boolean,System.Boolean,System.Boolean)">
+ <summary>
+ Reverse engineers the Model from the database of that Model.
+ PRECONDITIONS: The Model has a linked database.
+ </summary>
+</member>
+<member name="M:MindfulDB.ODBCDatabaseReverseEngineer.createEntityTypesForTablesThatAreNotSubtypesOfOtherTablesAndHaveNoColumns(System.String,System.String)">
+ <summary>
+ Creates Entity Types For Tables That Are Not Subtypes Of Other Tables And Have No Columns
+ </summary>
+</member>
+<member name="M:MindfulDB.ODBCDatabaseReverseEngineer.createValueTypesByTable(FactEngineForServices.RDS.Table@)">
+ <summary>
+ Creates the ValueTypes for Columns that that are ValueTypes (even if they are referenced by a Relation)
+   Value Types are, in this instance,:
+     1. Not the ValueTypes created for ReferenceShemes of EntityTypes created for Tables with single Column PrimaryKeys.
+        a) Including those Columns/ValueTypes that are referenced by a Column that references an EntityType for a Table with a single column PrimaryKey.
+     2. Are Columns/ValueTypes where the Column has no Relation/reference to another table.
+ </summary>
+</member>
+<member name="M:MindfulDB.ODBCDatabaseReverseEngineer.GetDataTypes">
+ <summary>
+ Used Predominantly with ODBC Connections where can retrieve the Data Types of a Database.
+ </summary>
+</member>
+<member name="M:MindfulDB.ODBCDatabaseReverseEngineer.makeCapCamelCaseNames">
+ <summary>
+ Only to be used on the TempModel.
+ </summary>
+</member>
+<member name="M:MindfulDB.MyMethodExtensions.Add``1(``0[]@,``0)">
+ <summary>
+ Add/Append and item to an array.
+ </summary>
+ <typeparam name="T"></typeparam>
+ <param name="arr"></param>
+ <param name="item"></param>
+</member>
+<member name="M:MindfulDB.MyMethodExtensions.Truncate(System.String,System.Int32)">
+ <summary>
+ Truncates a string to a max number of characters.
+ NB Can also use Strings.Left(str,int)
+ </summary>
+ <param name="value">The String to truncate</param>
+ <param name="maxLength">The maximum length of the string from the left.</param>
+ <returns></returns>
+</member>
+<member name="M:MindfulDB.PublicConstants.AlternateDataTypeAttribute.Get(System.Type,System.String)">
+ <summary>
+ 20230121-VM-Implemented to transition from StringFixedLength (etc) to TextFixedLength.
+ </summary>
+ <param name="tp"></param>
+ <param name="name"></param>
+ <returns></returns>
+</member>
+<member name="T:MindfulDB.PublicConstants.pcenumORMDataType">
+ <summary>
+ See DataTypeAttribute Class (above) for how to get the name of an Enum member from its corresponding 
+   DataType attribute 'name'. Used when converting VAQL DataType tokens to ORMDataType enum.
+ </summary>
+ <remarks></remarks>
+</member>
+</members>
+</doc>

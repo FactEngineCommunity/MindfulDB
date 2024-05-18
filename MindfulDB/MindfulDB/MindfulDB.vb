@@ -2,6 +2,7 @@
 Imports FactEngineForServices
 
 Namespace MindfulDB
+
     Public Class MindfulDB
 
         Public Property ConnectionString As String
@@ -86,7 +87,8 @@ Namespace MindfulDB
                 Call lrReverseEngineer.ReverseEngineerDatabase(lsErrorMessage, False, False, False)
 
 
-                Call Me.GetEdgeLabelsFromTablesForeignKeys
+                Call Me.GetEdgeLabelsFromTablesForeignKeys()
+                Call Me.GetEdgeLabelsForPGSRelationTables()
 
                 'Get the Graph Definition of the Model.
                 Me.GraphDefinition = New Graph.GraphProvider(prApplication.WorkingModel.RDS)
@@ -237,6 +239,85 @@ Namespace MindfulDB
                 lsMessage &= vbCrLf & vbCrLf & ex.Message
                 prApplication.ThrowErrorMessage(lsMessage, pcenumErrorType.Critical, ex.StackTrace)
             End Try
+        End Sub
+
+        Private Sub GetEdgeLabelsForPGSRelationTables()
+
+            Try
+                Dim lsSQLQuery As String = ""
+
+#Region "Get the SQLQuery"
+                lsSQLQuery &= "WITH RECURSIVE pk_constraints AS (" & Environment.NewLine &
+    "SELECT" & Environment.NewLine &
+    "    referencing.name AS referencing_table," & Environment.NewLine &
+    "    TRIM(SUBSTR(referencing.sql, INSTR(referencing.sql, 'CONSTRAINT') + LENGTH('CONSTRAINT'), INSTR(referencing.sql, 'PRIMARY KEY') - INSTR(referencing.sql, 'CONSTRAINT') - LENGTH('CONSTRAINT'))) AS primary_key_constraint," & Environment.NewLine &
+    "    SUBSTR(referencing.sql, INSTR(referencing.sql, 'PRIMARY KEY') + LENGTH('PRIMARY KEY') + 1) AS remaining_sql" & Environment.NewLine &
+    "FROM" & Environment.NewLine &
+    "    sqlite_master AS referencing" & Environment.NewLine &
+    "WHERE" & Environment.NewLine &
+    "    referencing.type = 'table'" & Environment.NewLine &
+    "    AND referencing.sql LIKE '%PRIMARY KEY%'" & Environment.NewLine &
+    "    AND referencing.sql LIKE '%/* { Label:""%'" & Environment.NewLine &
+    Environment.NewLine &
+    "UNION ALL" & Environment.NewLine &
+    Environment.NewLine &
+    "SELECT" & Environment.NewLine &
+    "    referencing_table," & Environment.NewLine &
+    "    TRIM(SUBSTR(remaining_sql, INSTR(remaining_sql, 'CONSTRAINT') + LENGTH('CONSTRAINT'), INSTR(remaining_sql, 'PRIMARY KEY') - INSTR(remaining_sql, 'CONSTRAINT') - LENGTH('CONSTRAINT')))," & Environment.NewLine &
+    "    SUBSTR(remaining_sql, INSTR(remaining_sql, 'PRIMARY KEY') + LENGTH('PRIMARY KEY') + 1)" & Environment.NewLine &
+    "FROM" & Environment.NewLine &
+    "    pk_constraints" & Environment.NewLine &
+    "WHERE" & Environment.NewLine &
+    "    remaining_sql LIKE '%PRIMARY KEY%'" & Environment.NewLine &
+    "    AND remaining_sql REGEXP '^(?!.*FOREIGN KEY.*{ Label).*{ Label'" & Environment.NewLine &
+    ")" & Environment.NewLine &
+    Environment.NewLine &
+    "SELECT" & Environment.NewLine &
+    "    referencing_table," & Environment.NewLine &
+    "    primary_key_constraint," & Environment.NewLine &
+    "    CASE" & Environment.NewLine &
+    "        WHEN remaining_sql REGEXP '^(?!.*FOREIGN KEY.*{ Label).*{ Label' THEN" & Environment.NewLine &
+    "            TRIM(" & Environment.NewLine &
+    "                REPLACE(" & Environment.NewLine &
+    "                    SUBSTR(" & Environment.NewLine &
+    "                        remaining_sql," & Environment.NewLine &
+    "                        INSTR(remaining_sql, '/* { Label:') + LENGTH('/* { Label:')," & Environment.NewLine &
+    "                        INSTR(remaining_sql, '} */') - INSTR(remaining_sql, '/* { Label:') - LENGTH('/* { Label:')" & Environment.NewLine &
+    "                    )," & Environment.NewLine &
+    "                    '""',''" & Environment.NewLine &
+    "                )" & Environment.NewLine &
+    "            )" & Environment.NewLine &
+    "        ELSE" & Environment.NewLine &
+    "            NULL" & Environment.NewLine &
+    "    END AS label," & Environment.NewLine &
+    "    remaining_sql" & Environment.NewLine &
+    "FROM" & Environment.NewLine &
+    "    pk_constraints" & Environment.NewLine &
+    "WHERE" & Environment.NewLine &
+    "   remaining_sql REGEXP '^(?!.*FOREIGN KEY.*{ Label).*{ Label'"
+#End Region
+
+                Dim lrRecordset = Me.Model.DatabaseConnection.GO(lsSQLQuery)
+
+                While Not lrRecordset.EOF
+
+                    Dim lrTable = Me.Model.RDS.Table.Find(Function(x) x.Name = lrRecordset("referencing_table").Data)
+                    If lrTable IsNot Nothing Then 'CodeSafe
+                        lrTable.SetLabel(lrRecordset("label").Data)
+                    End If
+
+                    lrRecordset.MoveNext()
+                End While
+
+            Catch ex As Exception
+                Dim lsMessage As String
+                Dim mb As MethodBase = MethodInfo.GetCurrentMethod()
+
+                lsMessage = "Error: " & mb.ReflectedType.Name & "." & mb.Name
+                lsMessage &= vbCrLf & vbCrLf & ex.Message
+                prApplication.ThrowErrorMessage(lsMessage, pcenumErrorType.Critical, ex.StackTrace)
+            End Try
+
         End Sub
 
     End Class

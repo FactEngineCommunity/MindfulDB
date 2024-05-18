@@ -1,0 +1,4367 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+FactEngineForServices
+</name>
+</assembly>
+<members>
+<member name="T:FactEngineForServices.My.Resources.Resources">
+<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+<member name="P:FactEngineForServices.My.Resources.Resources.ResourceManager">
+<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member>
+<member name="P:FactEngineForServices.My.Resources.Resources.Culture">
+<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member>
+<member name="T:FactEngineForServices.tBrain">
+ <summary>
+ The Brain follows the principals of Organic / Autonomic Computing.
+ See the following articles:
+ 1. https://en.wikipedia.org/wiki/Autonomic_computing
+ 2. 
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.tBrain.FTRProcessor">
+ <summary>
+ Used for parsing FTR texts as input by the user. 
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.tBrain.FTRParser">
+ <summary>
+ Used to Parse Fact Type Reading texts into component parts.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.tBrain.ProcessedSentences">
+ <summary>
+ List of Processed Sentences. May include unresolved Sentences.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.tBrain.OutstandingSentences">
+ <summary>
+ List of unresolved Sentences.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.tBrain.send_data(System.String,System.Boolean,System.Boolean,System.Boolean)">
+ <summary>
+ See also: Me.OutOfTimeout
+ </summary>
+ <param name="asData"></param>
+ <param name="ab_is_echo"></param>
+ <param name="abSuppressLineLimit"></param>
+</member>
+<member name="M:FactEngineForServices.tBrain.get_PredicateParts_from_reading(System.String,FactEngineForServices.FBM.FactTypeReading@)">
+ <summary>
+ 20161205-Possibily obsolete. The new FactTypeReading model changes much of this function.
+ </summary>
+ <param name="as_reading"></param>
+ <param name="arFactTypeReading"></param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.tBrain.PreParseORMQL(System.String)">
+ <summary>
+ Used to check whether a Sentence is an ORMQL Statement, when in NaturalLanguage Mode.
+ The following code can be used to check the returned result (as to whether the Sentence is a valid ORMQL Statement)
+ lrObjectReturn.GetType Is GetType(TinyPG.ParseErrors)
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.tBrain.ProcessORMQL">
+ <summary>
+ Used in ORMQL Mode, called from Me.ProcessInputBuffer
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.tBrain.OutOfTimeOut(System.Object,System.Timers.ElapsedEventArgs)">
+ <summary>
+ Primary Brain process for Processing 'Sentences', Asking 'Questions'.
+ Is called as a result of the trigger: Me->'AddHandler Timeout.Elapsed, AddressOf OutOfTimeOut'
+ </summary>
+ <param name="sender"></param>
+ <param name="e"></param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.tBrain.AnalyseCurrentSentence">
+ <summary>
+ Does precursory checking of the type of Statement that the user may be making.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.tBrain.AskQuestionCreateValueType(FactEngineForServices.FBM.ValueType,FactEngineForServices.Language.Sentence@,System.Boolean,FactEngineForServices.Brain.Plan@)">
+ <summary>
+ 
+ </summary>
+ <param name="arValueType"></param>
+ <param name="arSentence"></param>
+ <param name="abInsertAtHeadOfQueue"></param>
+ <param name="arOriginalPlan">An existing Plan if modifying an existing Plan.</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.tBrain.TokeniseInputBuffer">
+ <summary>
+ 20161130-This is older code that may no longer be relevant (used in Me.ProcessSentence)
+   but which may be very important if Me.ProcessSentence is used again in the future.
+ Breaks the Me.InputBuffer (sentence) into Tokens or 'Symbols' that may be processed in various ways by other parts of the code.
+ 20161130-Check to see if is superceded by the Language.Sentence structure.
+ 20161130-At the very least, this code is currently innocuous and causes no harm to the functioning of the brain.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.tBrain.ProcessFEQLStatement(System.String)">
+ <summary>
+ Used to call VAQL Statements from the FactEngine form. This is so that Knowledge Language statements can be made in the FactEngine.
+ </summary>
+ <param name="asFEQLStatement"></param>
+</member>
+<member name="M:FactEngineForServices.tBrain.executeStatementAddFactTypePredetermined(FactEngineForServices.tQuestion@)">
+ <summary>
+ Used when the ModelElements are already identified
+   e.g. When a Sentence of type 'Person has AT MOST ONE FirstName' is processed, the ModelElements are identified by the VAQL Parser.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="T:FactEngineForServices.Brain.Plan">
+ <summary>
+ Plans may have a Goal, such as creating a FactType. To reach that Goal, 'Steps' are generally required (e.g. Creation of a ValueType that 
+   hosts a Role in the FactType). The Steps of the Plan lead towards achieving a Goal. If Steps fail, then (generally) the Plan fails.
+   Steps may fail because the user has answered a Question of the Step in the negative, negating the successful conclusion of the Step, 
+   and negating the achievement of the Goal.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.Brain.Plan.IsAborted">
+ <summary>
+ True if the Plan was aborted.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.Brain.Step.SequenceNumber">
+ <summary>
+ The ordinal position/SequenceNumber of the Step within a Plan.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.Brain.Step.ActionType">
+ <summary>
+ The type of action the Brain is attempting to achieve by this Step within a Plan.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.Brain.Step.Question">
+ <summary>
+ The Question associated with the Step.
+   e.g. The Step may be to create an EntityType and which needs ratification by the User.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.Language.Sentence.#ctor(System.String,System.String)">
+ <summary>
+ 
+ </summary>
+ <param name="asSentence">e.g. 'part is in bin in warehouse'. NB The Brain may have already converted the input to lowercase.</param>
+ <param name="asOriginalSentence">e.g. 'Part is in Bin in Warehouse'. i.e. The sentence before the Brain converted the sentence to lowercase.</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.Language.Sentence.ReduceSpaces(System.Object)">
+ <summary>
+ Reduces any 'spaces' greater than a single space, to 1 space
+ </summary>
+ <param name="asSentence"></param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.Language.Sentence.IsStatement">
+ <summary>
+ Returns True if the Sentence is a Statement
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.Language.Sentence.IsQuestion">
+ <summary>
+ Returns True if the Sentence is a Question
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.Language.Sentence.IsDirective">
+ <summary>
+ Returns True if the Sentence is a Directive
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.Language.Sentence.IsQualified">
+ <summary>
+ Returns True if every Word in the Sentence has a WordQalification.Sense Count of 1 (i.e. every word in the Sentence is qualified as to what Sense that word is within the Sentence)
+ AND The SentenceType is known.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.tQuestion.Plan">
+ <summary>
+ The Plan that this Question forms part of.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.tQuestion.PlanStep">
+ <summary>
+ The Step in the Plan for the Question that this Question assists in qualifying.
+   i.e. e.g. If a Plan has a Step that requires a Question to be asked of the user, this member (PlanStep) stores that Step,
+   and this Question is that Question that assists in qualifying/completing the Step.
+   If the Step requires an affirmative response from the user, and a negative response if given, then (generally) the Step in the Plan
+   fails, and the Plan may well then fail/be-aborted.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.tQuestion.AdditionalSentence">
+ <summary>
+ Used if a reciprocal/reverse FactTypeReading needs to be made for a FactType. E.g. Contains one entry for a Binary Fact Type.
+ </summary>
+</member>
+<member name="M:FactEngineForServices.Database.Database.gerLikeWildcardOperator(FactEngineForServices.publicConstants.pcenumDatabaseType)">
+ <summary>
+ Returns the wildcard operator for a database type. I.e. e.g. * or %
+ </summary>
+ <param name="aiDatabaseType"></param>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FactEngine.Neo4jConnection.addColumn(FactEngineForServices.RDS.Column@)">
+ <summary>
+ Adds a new Column to a Table.
+ </summary>
+ <param name="arColumn"></param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.Neo4jConnection.addIndex(FactEngineForServices.RDS.Index@)">
+ <summary>
+ Adds the referenced Index to the database. Table is within Index definition.
+ </summary>
+ <param name="arIndex">The Index to be added to the database.</param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.Neo4jConnection.AddForeignKey(FactEngineForServices.RDS.Relation@)">
+ <summary>
+ Adds the given Relation/ForeignKey to the database. Relation holds relative Tables.
+ </summary>
+ <param name="arRelation"></param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.Neo4jConnection.columnChangeDatatype(FactEngineForServices.RDS.Column@,FactEngineForServices.publicFBMConstants.pcenumORMDataType,System.Int32,System.Int32@)">
+ <summary>
+ Changes the data type of the nominated column.
+ </summary>
+ <param name="arColumn">The Column to have its data type changed.</param>
+ <param name="asDataType">The new data type.</param>
+ <param name="asLength">The length of the data type. 0 is nothing.</param>
+ <param name="arPrecision">The precision of the data type. 0 is nothing.</param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.Neo4jConnection.columnSetMandatory(FactEngineForServices.RDS.Column@,System.Boolean)">
+ <summary>
+ Sets whether the specified Column is mandatory or not, in the database.
+ </summary>
+ <param name="arColumn">The Column to have its schema definition changed.</param>
+ <param name="abIsMandatory">True if the Column is mandatory for its Table.</param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.Neo4jConnection.createTable(FactEngineForServices.RDS.Table@,FactEngineForServices.RDS.Column@)">
+ Creates a new table in the database. Relational tablles must have at least one one column.
+ <summary>
+ <param name="arTable">The table to be created.</param>
+ <param name="arColumn">The column to be created for the new table.</param>
+ </summary>
+</member>
+<member name="M:FactEngineForServices.FactEngine.Neo4jConnection.generateSQLCREATETABLEStatement(FactEngineForServices.RDS.Table@,System.String)">
+ <summary>
+ Generates a CREATE TABLE Statement for the given Table, specific to the database type.
+ </summary>
+ <param name="arTable">The RDS Table for which the SQL CREATE statement is to be generated.</param>
+ <param name="asTableName">Optional table name for the table in the CREATE statement.</param>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FactEngine.Neo4jConnection.getIndexesByTable(FactEngineForServices.RDS.Table@)">
+ <summary>
+ Returns a list of the Indexes in the database. As used in Reverse Engineering a database.
+ </summary>
+ <param name="arTable"></param>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FactEngine.Neo4jConnection.getIndexesByTableByAlternateMeans(FactEngineForServices.RDS.Table@)">
+ <summary>
+ Gets PK Index by other means if primary GetIndexesByTable doesn't return PK Indexes.
+   E.g. In SQLite you can create a Table with a PK and without an Index.
+ </summary>
+ <param name="arTable"></param>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FactEngine.Neo4jConnection.getTables">
+ <summary>
+ Returns a list of the Tables in the database. As used in Reverse Engineering a database.
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FactEngine.Neo4jConnection.IndexAddColumn(FactEngineForServices.RDS.Index@,FactEngineForServices.RDS.Column@)">
+ <summary>
+ Adds the nominated Column to the nominated Index.
+ </summary>
+ <param name="arIndex">The Index to add the nominated Column to.</param>
+ <param name="arColumn">The Column to add to the nominated Index.</param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.Neo4jConnection.IndexUpdate(FactEngineForServices.RDS.Index@)">
+ <summary>
+ Updates the Index in the database. E.g. Changing a Unique Index to Primary Key.
+ </summary>
+ <param name="arIndex">The Index to be updated.</param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.Neo4jConnection.recreateTable(FactEngineForServices.RDS.Table@)">
+ <summary>
+ Creates or Recreates the Table in the database.
+ </summary>
+ <param name="arTable"></param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.Neo4jConnection.removeColumn(FactEngineForServices.RDS.Column@)">
+ <summary>
+ Removes the Column from its Table.
+ </summary>
+ <param name="arColumn"></param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.Neo4jConnection.removeTable(FactEngineForServices.RDS.Table@)">
+ <summary>
+ Removes/Drops the Table from the database.
+ </summary>
+ <param name="arTable"></param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.Neo4jConnection.renameColumn(FactEngineForServices.RDS.Column@,System.String)">
+ <summary>
+ Renames the given Column to the new column name.
+ </summary>
+ <param name="arColumn"></param>
+ <param name="asNewColumnName"></param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.Neo4jConnection.RenameTable(FactEngineForServices.RDS.Table@,System.String)">
+ <summary>
+ Renames a table in the database.
+ </summary>
+ <param name="arTable"></param>
+ <param name="asNewName"></param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.Neo4jConnection.TableExists(System.String)">
+ <summary>
+ Returns True if a Table with the given name exists in the database, else returns False.
+ </summary>
+ <param name="asTableName"></param>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FactEngine.Neo4jConnection.UpdateAttributeValue(System.String,FactEngineForServices.RDS.Column,System.String,System.Collections.Generic.List{FactEngineForServices.RDS.Column})">
+ <summary>
+ Updates the value of a Column in the database.
+ </summary>
+ <param name="asTableName">The name of the Table for which the Attribute/Column value is to be updated.</param>
+ <param name="arColumn">The Column/Attribute for which the value is to be updated.</param>
+ <param name="asNewValue">The new value for the Attribute/Column.</param>
+ <param name="aarPKColumn">A list of the Primary Key Columns/Attributes for the record to be updated. TemporaryValue of Column is existing/old value of the Primary Key Column/Attribute.</param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.SQLiteConnection.addColumn(FactEngineForServices.RDS.Column@)">
+ <summary>
+ Adds a new Column to a Table.
+ </summary>
+ <param name="arColumn"></param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.SQLiteConnection.addIndex(FactEngineForServices.RDS.Index@)">
+ <summary>
+ Adds the referenced Index to the database. Table is within Index definition.
+ </summary>
+ <param name="arIndex">The Index to be added to the database.</param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.SQLiteConnection.AddForeignKey(FactEngineForServices.RDS.Relation@)">
+ <summary>
+ Adds the given Relation/ForeignKey to the database. Relation holds relative Tables.
+ </summary>
+ <param name="arRelation"></param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.SQLiteConnection.columnChangeDatatype(FactEngineForServices.RDS.Column@,FactEngineForServices.publicFBMConstants.pcenumORMDataType,System.Int32,System.Int32@)">
+ <summary>
+ Changes the data type of the nominated column.
+ </summary>
+ <param name="arColumn">The Column to have its data type changed.</param>
+ <param name="asDataType">The new data type.</param>
+ <param name="asLength">The length of the data type. 0 is nothing.</param>
+ <param name="arPrecision">The precision of the data type. 0 is nothing.</param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.SQLiteConnection.columnSetMandatory(FactEngineForServices.RDS.Column@,System.Boolean)">
+ <summary>
+ Sets whether the specified Column is mandatory or not, in the database.
+ </summary>
+ <param name="arColumn">The Column to have its schema definition changed.</param>
+ <param name="abIsMandatory">True if the Column is mandatory for its Table.</param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.SQLiteConnection.createTable(FactEngineForServices.RDS.Table@,FactEngineForServices.RDS.Column@)">
+ Creates a new table in the database. Relational tablles must have at least one one column.
+ <summary>
+ <param name="arTable">The table to be created.</param>
+ <param name="arColumn">The column to be created for the new table.</param>
+ </summary>
+</member>
+<member name="M:FactEngineForServices.FactEngine.SQLiteConnection.generateSQLCREATETABLEStatement(FactEngineForServices.RDS.Table@,System.String)">
+ <summary>
+ Generates a CREATE TABLE Statement for the given Table, specific to the database type.
+ </summary>
+ <param name="arTable">The RDS Table for which the SQL CREATE statement is to be generated.</param>
+ <param name="asTableName">Optional table name for the table in the CREATE statement.</param>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FactEngine.SQLiteConnection.getIndexesByTable(FactEngineForServices.RDS.Table@)">
+ <summary>
+ Returns a list of the Indexes in the database. As used in Reverse Engineering a database.
+ </summary>
+ <param name="arTable"></param>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FactEngine.SQLiteConnection.getIndexesByTableByAlternateMeans(FactEngineForServices.RDS.Table@)">
+ <summary>
+ Gets PK Index by other means if primary GetIndexesByTable doesn't return PK Indexes.
+   E.g. In SQLite you can create a Table with a PK and without an Index.
+ </summary>
+ <param name="arTable"></param>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FactEngine.SQLiteConnection.getTables">
+ <summary>
+ Returns a list of the Tables in the database. As used in Reverse Engineering a database.
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FactEngine.SQLiteConnection.IndexAddColumn(FactEngineForServices.RDS.Index@,FactEngineForServices.RDS.Column@)">
+ <summary>
+ Adds the nominated Column to the nominated Index.
+ </summary>
+ <param name="arIndex">The Index to add the nominated Column to.</param>
+ <param name="arColumn">The Column to add to the nominated Index.</param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.SQLiteConnection.IndexUpdate(FactEngineForServices.RDS.Index@)">
+ <summary>
+ Updates the Index in the database. E.g. Changing a Unique Index to Primary Key.
+ </summary>
+ <param name="arIndex">The Index to be updated.</param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.SQLiteConnection.recreateTable(FactEngineForServices.RDS.Table@)">
+ <summary>
+ Creates or Recreates the Table in the database.
+ </summary>
+ <param name="arTable"></param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.SQLiteConnection.removeColumn(FactEngineForServices.RDS.Column@)">
+ <summary>
+ Removes the Column from its Table.
+ </summary>
+ <param name="arColumn"></param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.SQLiteConnection.removeTable(FactEngineForServices.RDS.Table@)">
+ <summary>
+ Removes/Drops the Table from the database.
+ </summary>
+ <param name="arTable"></param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.SQLiteConnection.renameColumn(FactEngineForServices.RDS.Column@,System.String)">
+ <summary>
+ Renames the given Column to the new column name.
+ </summary>
+ <param name="arColumn"></param>
+ <param name="asNewColumnName"></param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.SQLiteConnection.RenameTable(FactEngineForServices.RDS.Table@,System.String)">
+ <summary>
+ Renames a table in the database.
+ </summary>
+ <param name="arTable"></param>
+ <param name="asNewName"></param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.SQLiteConnection.TableExists(System.String)">
+ <summary>
+ Returns True if a Table with the given name exists in the database, else returns False.
+ </summary>
+ <param name="asTableName"></param>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FactEngine.SQLiteConnection.UpdateAttributeValue(System.String,FactEngineForServices.RDS.Column,System.String,System.Collections.Generic.List{FactEngineForServices.RDS.Column})">
+ <summary>
+ Updates the value of a Column in the database.
+ </summary>
+ <param name="asTableName">The name of the Table for which the Attribute/Column value is to be updated.</param>
+ <param name="arColumn">The Column/Attribute for which the value is to be updated.</param>
+ <param name="asNewValue">The new value for the Attribute/Column.</param>
+ <param name="aarPKColumn">A list of the Primary Key Columns/Attributes for the record to be updated. TemporaryValue of Column is existing/old value of the Primary Key Column/Attribute.</param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.DatabaseConnection.addColumn(FactEngineForServices.RDS.Column@)">
+ <summary>
+ Adds a new Column to a Table.
+ </summary>
+ <param name="arColumn"></param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.DatabaseConnection.addIndex(FactEngineForServices.RDS.Index@)">
+ <summary>
+ Adds the referenced Index to the database. Table is within Index definition.
+ </summary>
+ <param name="arIndex">The Index to be added to the database.</param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.DatabaseConnection.AddForeignKey(FactEngineForServices.RDS.Relation@)">
+ <summary>
+ Adds the given Relation/ForeignKey to the database. Relation holds relative Tables.
+ </summary>
+ <param name="arRelation"></param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.DatabaseConnection.columnChangeDatatype(FactEngineForServices.RDS.Column@,FactEngineForServices.publicFBMConstants.pcenumORMDataType,System.Int32,System.Int32@)">
+ <summary>
+ Changes the data type of the nominated column.
+ </summary>
+ <param name="arColumn">The Column to have its data type changed.</param>
+ <param name="asDataType">The new data type.</param>
+ <param name="aiLength">The length of the data type. 0 is nothing.</param>
+ <param name="aiPrecision">The precision of the data type. 0 is nothing.</param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.DatabaseConnection.columnSetMandatory(FactEngineForServices.RDS.Column@,System.Boolean)">
+ <summary>
+ Sets whether the specified Column is mandatory or not, in the database.
+ </summary>
+ <param name="arColumn">The Column to have its schema definition changed.</param>
+ <param name="abIsMandatory">True if the Column is mandatory for its Table.</param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.DatabaseConnection.createTable(FactEngineForServices.RDS.Table@,FactEngineForServices.RDS.Column@)">
+ <summary>
+ Creates a new table in the database. Relational tablles must have at least one one column.
+ </summary>
+ <param name="arTable">The table to be created.</param>
+ <param name="arColumn">The column to be created for the new table.</param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.DatabaseConnection.dateToTextOperator">
+ <summary>
+ Some databases, like PostgreSQL use a date to string operator for use in LIKE clauses.
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FactEngine.DatabaseConnection.generateSQLCREATETABLEStatement(FactEngineForServices.RDS.Table@,System.String)">
+ <summary>
+ Generates a CREATE TABLE Statement for the given Table, specific to the database type.
+ </summary>
+ <param name="arTable">The RDS Table for which the SQL CREATE statement is to be generated.</param>
+ <param name="asTableName">Optional table name for the table in the CREATE statement.</param>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FactEngine.DatabaseConnection.getForeignKeyRelationshipsByTable(FactEngineForServices.RDS.Table@)">
+ <summary>
+ Returns a list of the Relations/ForeignKeys in the database. As used in Reverse Engineering a database.
+ </summary>
+ <param name="arTable"></param>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FactEngine.DatabaseConnection.getIndexesByTable(FactEngineForServices.RDS.Table@)">
+ <summary>
+ Returns a list of the Indexes in the database. As used in Reverse Engineering a database.
+ </summary>
+ <param name="arTable"></param>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FactEngine.DatabaseConnection.getIndexesByTableByAlternateMeans(FactEngineForServices.RDS.Table@)">
+ <summary>
+ Gets PK Index by other means if primary GetIndexesByTable doesn't return PK Indexes.
+   E.g. In SQLite you can create a Table with a PK and without an Index.
+ </summary>
+ <param name="arTable"></param>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FactEngine.DatabaseConnection.getTables">
+ <summary>
+ Returns a list of the Tables in the database. As used in Reverse Engineering a database.
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FactEngine.DatabaseConnection.IndexAddColumn(FactEngineForServices.RDS.Index@,FactEngineForServices.RDS.Column@)">
+ <summary>
+ Adds the nominated Column to the nominated Index.
+ </summary>
+ <param name="arIndex">The Index to add the nominated Column to.</param>
+ <param name="arColumn">The Column to add to the nominated Index.</param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.DatabaseConnection.IndexUpdate(FactEngineForServices.RDS.Index@)">
+ <summary>
+ Updates the Index in the database. E.g. Changing a Unique Index to Primary Key.
+ </summary>
+ <param name="arIndex">The Index to be updated.</param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.DatabaseConnection.recreateTable(FactEngineForServices.RDS.Table@)">
+ <summary>
+ Creates or Recreates the Table in the database.
+ </summary>
+ <param name="arTable"></param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.DatabaseConnection.removeColumn(FactEngineForServices.RDS.Column@)">
+ <summary>
+ Removes the Column from its Table.
+ </summary>
+ <param name="arColumn"></param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.DatabaseConnection.removeTable(FactEngineForServices.RDS.Table@)">
+ <summary>
+ Removes/Drops the Table from the database.
+ </summary>
+ <param name="arTable"></param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.DatabaseConnection.renameColumn(FactEngineForServices.RDS.Column@,System.String)">
+ <summary>
+ Renames the given Column to the new column name.
+ </summary>
+ <param name="arColumn"></param>
+ <param name="asNewColumnName"></param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.DatabaseConnection.RenameTable(FactEngineForServices.RDS.Table@,System.String)">
+ <summary>
+ Renames a table in the database.
+ </summary>
+ <param name="arTable"></param>
+ <param name="asNewName"></param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.DatabaseConnection.TableExists(System.String)">
+ <summary>
+ Returns True if a Table with the given name exists in the database, else returns False.
+ </summary>
+ <param name="asTableName"></param>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FactEngine.DatabaseConnection.UpdateAttributeValue(System.String,FactEngineForServices.RDS.Column,System.String,System.Collections.Generic.List{FactEngineForServices.RDS.Column})">
+ <summary>
+ Updates the value of a Column in the database.
+ </summary>
+ <param name="asTableName">The name of the Table for which the Attribute/Column value is to be updated.</param>
+ <param name="arColumn">The Column/Attribute for which the value is to be updated.</param>
+ <param name="asNewValue">The new value for the Attribute/Column.</param>
+ <param name="aarPKColumn">A list of the Primary Key Columns/Attributes for the record to be updated. TemporaryValue of Column is existing/old value of the Primary Key Column/Attribute.</param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.DatabaseManager.#ctor">
+ <summary>
+ Parameterless New
+ </summary>
+</member>
+<member name="T:FactEngineForServices.FactEngine.tQueryFormulaToken">
+ <summary>
+ A QueryEdge may have a Formula, which is a List(Of tQueryFormulaToken).
+   NB The classes QueryFormulaToken and QueryNode both inherit from tQueryFormulaToken.
+ </summary>
+</member>
+<member name="M:FactEngineForServices.FactEngine.QueryFormulaToken.#ctor">
+ <summary>
+ Parameterless Constructor
+ </summary>
+</member>
+<member name="M:FactEngineForServices.FactEngine.QueryGraph.generateSQL(FactEngineForServices.FEQL.WHICHSELECTStatement@,System.Boolean,System.Boolean,FactEngineForServices.FBM.ModelObject@,System.Boolean@)">
+ <summary>
+ Generates SQL to run against the database for this QueryGraph
+ </summary>
+ <param name="arWhichSelectStatement">The WhichSelectStatement from which the SQL is generated.
+ NB Subqueries are generated using this same function. For a subquery, contains the WhichSelectStatement if the subquery.</param>
+ <param name="abIsCountStarSubQuery">? TBA</param>
+ <param name="abIsStraightDerivationClause">TRUE if called to generate the SQL for a DerivedFactType. A specialised set of ProjectColumns is returned, using PKs rather than UCs.</param>
+ <param name="arDerivedModelElement">The DerivedModelElement if is called to generate the SQL for a DerivedModelElement.</param>
+ <returns></returns>
+</member>
+<member name="F:FactEngineForServices.FactEngine.QueryGraph.HeadNode">
+ <summary>
+ The HeadNode of the FactEngine WHICH Query, as in Lecturer in "WHICH Lecturer is located in WHICH Room"
+ </summary>
+</member>
+<member name="F:FactEngineForServices.FactEngine.QueryGraph.ProjectionColumn">
+ <summary>
+ The list of ProjectionColumns for the Query. Used to find and display Nodes/Links in QueryView in FactEngine form.
+ </summary>
+</member>
+<member name="F:FactEngineForServices.FactEngine.QueryEdge.IsCircular">
+ <summary>
+ For graph queries looking for circular paths.
+ </summary>
+</member>
+<member name="F:FactEngineForServices.FactEngine.QueryEdge.IsShortestPath">
+ <summary>
+ For graph queries looking for shortest path.
+ </summary>
+</member>
+<member name="F:FactEngineForServices.FactEngine.QueryEdge.IsReciprocal">
+ <summary>
+ 'E.g. WHICH "Person was armed by WHICH Person 2", rather than "WHICH Person armed Person 2" and where the latter is the primary FactTypeReading predicate.
+ </summary>
+</member>
+<member name="F:FactEngineForServices.FactEngine.QueryEdge.IsPartialPredicateEdge">
+ <summary>
+ True if the Predicate is one of many (2 or more) PredicateParts of a Ternary or greater FactType.
+ E.g. WHICH Part is in (Bin:'H1')  where 'is in' is a PredicatePart of 'Part is in Bin in Warehouse'.
+ </summary>
+</member>
+<member name="F:FactEngineForServices.FactEngine.QueryEdge.FBMPossibleFactTypes">
+ <summary>
+ Used when QueryEdge matches one of the many PredicateParts of a FTR for a FactType with Arity greater than 2
+ E.g. "Person visited (Country:'China')" within a larger ternary FactType, "Person visited (Country:'China') within the last 10 months"
+ </summary>
+</member>
+<member name="F:FactEngineForServices.FactEngine.QueryEdge.IsPartialFactTypeMatch">
+ <summary>
+ True when the QueryEdge is a match for only part of the FactType.
+ E.g. When "Person visited (Country:'China')" is the partial match for a larger Fact Type (Reading)
+ 'Person visited (Country:'China') within the last 10 months' as in the query "WHICH Person visited (Country:'China') within the last 10 months"
+ </summary>
+</member>
+<member name="F:FactEngineForServices.FactEngine.QueryEdge.AmbiguousFactTypeMatches">
+ <summary>
+ Populated on initial parse if more than one Partial FactType Match
+ </summary>
+</member>
+<member name="F:FactEngineForServices.FactEngine.QueryEdge.ErrorMessage">
+ <summary>
+ Populated if Ambiguous FactType Match for Partial FactType Match type QueryEdges. I.e. Partial FactTypeReading is found.
+ </summary>
+</member>
+<member name="F:FactEngineForServices.FactEngine.QueryEdge.IsProjectColumn">
+ <summary>
+ TRUE if is the project of a select/project
+ </summary>
+</member>
+<member name="P:FactEngineForServices.FactEngine.QueryEdge.Alias">
+ <summary>
+ As set when setting the QueryGraph.Nodes aliases
+ </summary>
+</member>
+<member name="F:FactEngineForServices.FactEngine.QueryEdge.InjectsQueryEdge">
+ <summary>
+ A query such as "WHICH Seat has A Booking THAT is to watch (Film:'Rocky')" will inject a QueryEdge "Session is to watch Film"
+   where the model is "Seat has Booking THAT is for Session THAT is to watch (Film:'Rocky')" where Session is an ObjectifiedFactType over
+   Film, Cinema and DateTime and where 'Session is to watch Film' is for the corresponding LinkFactType between Session and Film.
+ </summary>
+</member>
+<member name="M:FactEngineForServices.FactEngine.QueryEdge.#ctor">
+ <summary>
+ Paremeterless New
+ </summary>
+</member>
+<member name="M:FactEngineForServices.FactEngine.QueryEdge.#ctor(FactEngineForServices.FactEngine.QueryNode@,FactEngineForServices.FBM.FactType@)">
+ <summary>
+ E.g. For the FactEngine query, "Which Lecturer is in which School", arTargetNode points to the 
+ QueryNode for the 'School' FBM ModelObject, and arFBMFactType is the FactType with FactType reading "Lecturer is in School"
+ </summary>
+ <param name="arTargetNode">The node on the far side of the directed graph</param>
+ <param name="arFBMFactType">The FBM FactType which has a FactTypeReading matching the FactEngineQL query clause.</param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.QueryEdge.getAndSetFBMFactType(FactEngineForServices.FactEngine.QueryNode@,FactEngineForServices.FactEngine.QueryNode@,System.String,FactEngineForServices.FactEngine.QueryNode,System.Boolean)">
+ <summary>
+ 
+ </summary>
+ <param name="arBaseNode"></param>
+ <param name="arTargetNode"></param>
+ <param name="asPredicate"></param>
+ <param name="arPreviousTargetNode"></param>
+ <param name="abUsePreviousFoundBaseNodeIfFound">Predominantly used from within the FactEngine form itself when retrieving Identifiers, before QueryGraph has been created.</param>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FactEngine.QueryEdge.CreateFBMFactTypeReading(FactEngineForServices.FactEngine.QueryNode@,FactEngineForServices.FactEngine.QueryNode@,System.String,System.Collections.Generic.List{FactEngineForServices.FBM.ModelObject}@,System.Collections.Generic.List{FactEngineForServices.FBM.Role}@)">
+ <summary>
+ Used for QueryEdge.getAndSetFBMFactType
+ </summary>
+ <param name="arBaseNode">The BaseNode for the FactTypeReading</param>
+ <param name="arTargetNode">The TargetNode for he FactTypeReading</param>
+ <param name="asPredicate">THe Predicate for the FactTypeReading</param>
+ <param name="aarModelObject">The created list of ModelObjects</param>
+ <param name="aarRole">The created list of Roles.</param>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FactEngine.QueryEdge.getAndSetPredicatePart">
+ <summary>
+ Only used in last ditch effort to get predicate part when BaseNode, TargetNode and FBMFactType are known.
+ </summary>
+</member>
+<member name="F:FactEngineForServices.FactEngine.QueryNode.FBMModelObject">
+ <summary>
+ The FBM ModelObject represented by this QueryNode in the QueryGraph
+ </summary>
+</member>
+<member name="F:FactEngineForServices.FactEngine.QueryNode.IsExcludedConditional">
+ <summary>
+ True if is Target node and is on the other side of a Shortest Path query.
+   E.g. (Account:1) made [SHORTEST PATH 0..10] WHICH Transaction THAT was made to (Account 2:4) 
+   The above would otherwise have Account 2 as a conditional QueryNode/TargetNode, but is taken care of inside the Shortest Path FROM clause processing.
+ </summary>
+</member>
+<member name="F:FactEngineForServices.FactEngine.QueryNode.QueryEdge">
+ <summary>
+ The QueryEdge that resulted in this Node being added to the QueryGraph.Nodes collection
+ </summary>
+</member>
+<member name="P:FactEngineForServices.FactEngine.QueryNode.RelativeFBMModelObject">
+ <summary>
+ A QueryNode may represent a ValueType for a Column, and so QueryNode.RDSTable will return the Column for the relative Table for the RelativeFBMModelObject
+ </summary>
+ <returns></returns>
+</member>
+<member name="F:FactEngineForServices.FactEngine.QueryNode.Comparitor">
+ <summary>
+ Used for TargetNodes. Used for when generating SQL for Conditional Where Clauses.
+   Bang is for != (not equals)
+   Colon is for = (equals)
+   Carret is for when to use the PK of the Table rather than the first Unique Identifier.
+ </summary>
+</member>
+<member name="M:FactEngineForServices.FactEngine.QueryNode.#ctor">
+ <summary>
+ Parameterless New
+ </summary>
+</member>
+<member name="M:FactEngineForServices.FactEngine.QueryNode.#ctor(FactEngineForServices.FBM.ModelObject@,FactEngineForServices.FactEngine.QueryEdge@,System.Boolean,FactEngineForServices.FEQL.tFEQLConstants.pcenumFEQLComparitor)">
+ <summary>
+ 
+ </summary>
+ <param name="arFBMModelObject"></param>
+</member>
+<member name="M:FactEngineForServices.FactEngine.QueryNode.IsThatReferencedTargetNode">
+ <summary>
+ Used in SubQueries.
+ TRUE if the Node is a TargetNode and the QueryEdge for the node has a reading like "...THAT ModelElement" and the ModelElement hasn't previously been referenced.
+ E.g. Session in
+ WHICH Cinema is showing (Film:'Rocky') at (DateTime:'1/5/2021 10:00') 
+ AND contains WHICH Row THAT contains A Seat THAT has NO Booking THAT Is for THAT Session 
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FEQL.ParseError.#ctor">
+ <summary>
+ Parameterless constructor.
+ </summary>
+</member>
+<member name="M:FactEngineForServices.FEQL.ParseTree.Eval(System.Object[])">
+ <summary>
+ this is the entry point for executing and evaluating the parse tree.
+ </summary>
+ <param name="paramlist">additional optional input parameters</param>
+ <returns>the output of the evaluation function</returns>
+</member>
+<member name="M:FactEngineForServices.FEQL.ParseNode.Eval(FactEngineForServices.FEQL.ParseTree,System.Object[])">
+ <summary>
+ this implements the evaluation functionality, cannot be used directly
+ </summary>
+ <param name="tree">the parsetree itself</param>
+ <param name="paramlist">optional input parameters</param>
+ <returns>a partial result of the evaluation</returns>
+</member>
+<member name="M:FactEngineForServices.FEQL.Scanner.Scan(FactEngineForServices.FEQL.TokenType[])">
+ <summary>
+ executes a lookahead of the next token
+ and will advance the scan on the input string
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FEQL.Scanner.LookAhead(FactEngineForServices.FEQL.TokenType[])">
+ <summary>
+ returns token with longest best match
+ </summary>
+ <returns></returns>
+</member>
+<member name="P:FactEngineForServices.FEQL.COUNTRETURNCOLUMN.Extrapolation">
+ <summary>
+ NB Is useless if the database name is not the same as the modelelementname. This best processed at the graph level.
+ </summary>
+ <returns></returns>
+</member>
+<member name="F:FactEngineForServices.FEQL.Processor.DatabaseManager">
+ <summary>
+ The database manager that handles connection and queries/commands to the database.
+ </summary>
+</member>
+<member name="M:FactEngineForServices.FEQL.Processor.#ctor">
+ <summary>
+ Parameterless NEw
+ </summary>
+</member>
+<member name="M:FactEngineForServices.FEQL.Processor.processDerivationText(System.String,FactEngineForServices.FBM.ModelObject@,FactEngineForServices.FactEngine.QueryEdge[])">
+ <summary>
+ Returns the SQL for the Derivation
+ </summary>
+ <param name="asDerivationText">The Derivation Text of the FactType</param>
+ <param name="arFactType">The FactType for the Derivation Text</param>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FEQL.Processor.getDerivationType(FactEngineForServices.FEQL.DERIVATIONSTMT@)">
+ <summary>
+ Returns the type of Derivation for the given DerivationClause. E.g. TransitiveRingConstraintJoin
+ </summary>
+ <param name="arDerivationClause"></param>
+ <returns></returns>
+</member>
+<member name="F:FactEngineForServices.FEQL.WHICHSELECTStatement._NODEPROPERTYIDENTIFICATION">
+ <summary>
+ If the WHICHSELECTSTMT begins with a NodePropertyIdentification, then is populated.
+ </summary>
+</member>
+<member name="F:FactEngineForServices.FEQL.MATHCLAUSE._AddExpr">
+ <summary>
+ Stores the ParseTree segment for the AddExpr
+ </summary>
+</member>
+<member name="F:FactEngineForServices.tApplication.DatabaseVersionNr">
+ <summary>
+ Is the DatabaseVersion required by the Richmond application.
+   NB This may be quite different from My.Settings.DatabaseVersionNumber, which is the actual version number of the database.
+   When a Richmond upgrade is installed this Attribute may be different (higher version) than the installed database version number.
+   In the case where this attribute differs from My.Settings.DatabaseVersionNumber an upgrade to the database schema must be performed.
+   See frmDatabaseUpgrade an functionality in frmMain for more details on database schema upgrade.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.tApplication.Models">
+ <summary>
+ Collection of the Models loaded into memory when the EnterpriseViewer form is loaded.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.tApplication.getBostonApplicationModelById(System.String)">
+ <summary>
+ Gets a Model from the list of Models loaded into the application (in this class), else returns Nothing
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.tErrorLogger.#ctor">
+ <summary>
+ Parameterless Constructor.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.tErrorLogger.WriteToErrorLog(System.String,System.String,System.String)">
+ <summary>
+ Open or create an error log and submit error message.
+ </summary>
+ <param name="msg">message to be written to error file</param>
+ <param name="stkTrace">stack trace from error message</param>
+ <param name="title">title of the error file entry</param>
+ <remarks>RETURNS: Nothing</remarks>
+</member>
+<member name="F:FactEngineForServices.ERD.Attribute.ReferencesAttribute">
+ <summary>
+ Stores the (if any) Attribute referenced by the Attribute in the same or another Entity.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.ERD.Attribute._ResponsibleFactType">
+ <summary>
+ The FactType (at the ORMModel level) responsible for the existance of this Attribute.
+   NB If the FactType, at the ORMModel level, is removed from the ORMModel, then this Attribute must similarly be removed from its Entity.
+   Because this class/object is ultimately drawn on a Page.Diagram, the corresponding drawing object must reflect the removal of the Attribute.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.ERD.Attribute._ResponsibleRole">
+ <summary>
+ The Role (at the ORMModel level) responsible for the existanceof this Attribute.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.ERD.Attribute._ActiveRole">
+ <summary>
+ The Role that ultimately is responsible for the Attribute. Nested ObjectifiedFactTypes referenced by a Role in another ObjectifiedFactType are
+   sometime responsible for a Column/Property/Attribute that is not of the ResponsibleRole.
+   e.g. See the TimetableBookings Page of the University Model.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.ERD.Attribute._SupertypeColumn">
+ <summary>
+ Is the Column from the Supertype Table that is represented by this Attribute/Column, if this Attribute/Column is inherited from a Supertype table.
+ </summary>
+</member>
+<member name="F:FactEngineForServices.ERD.Attribute._Column">
+ <summary>
+ The RDS Column that the Attribute relates to.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.ERD.Attribute.Relation">
+ <summary>
+ If the Attribute is part of a Relation, the Relation that the Attribute is part of.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.ERD.Attribute.ComparerOrdinalPosition(FactEngineForServices.ERD.Attribute,FactEngineForServices.ERD.Attribute)">
+ <summary>
+ Used to sort Attributes by Ordinal Position
+ </summary>
+ <param name="aoA"></param>
+ <param name="aoB"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="T:FactEngineForServices.ERD.Entity">
+ <summary>
+ Used to draw/store ERD Entities when drawing an ERDDiagram.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.ERD.Entity._RDSTable">
+ <summary>
+ The Table at the RDS layer of the Model, and as represented by this Entity.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.ERD.Relation.#ctor(FactEngineForServices.FBM.Model@,FactEngineForServices.FBM.Page@,System.String,FactEngineForServices.FBM.FactDataInstance@,FactEngineForServices.publicCMML.pcenumCMMLMultiplicity,System.Boolean,System.Boolean,FactEngineForServices.FBM.FactDataInstance@,FactEngineForServices.publicCMML.pcenumCMMLMultiplicity,System.Boolean,FactEngineForServices.RDS.Table@)">
+ <summary>
+ Object constructor.
+ </summary>
+ <param name="arModel"></param>
+ <param name="arPage"></param>
+ <param name="asRelationId"></param>
+ <param name="arOriginEntity"></param>
+ <param name="aiOriginMultiplicity"></param>
+ <param name="abOriginMandatory"></param>
+ <param name="abOriginContributesToPrimaryKey"></param>
+ <param name="arDestinationEntity"></param>
+ <param name="aiDestinationMultiplicity"></param>
+ <param name="abDestinationMandatory"></param>
+ <param name="abCorrespondingTable">If the Relation is a PGSRelation, then has a corresponding Table.</param>
+</member>
+<member name="T:FactEngineForServices.ERD.TableNode">
+ <summary>
+ Inherits Mindfusion.Diagramming.TableNode
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:FactEngineForServices.ERD.tERDLink">
+ <summary>
+ NB This class is used for drawing the ERD Link on a Diagram.
+   See ERD.Link for the Class that is used to store information about a relationship link in an ER Diagram.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.ERD.tERDLink.ERDLink">
+ <summary>
+ The ERD Link that stores the relevant information required to draw this Link.
+   e.g. ERDLink.Relation stores the 'Multiplicity' and 'Mandatory' information required to draw this link.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.ERD.tERDLink.#ctor">
+ <summary>
+ Parameterless New
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModelv081.Model.MapFromFBMModel(FactEngineForServices.FBM.Model)">
+ <summary>
+ Maps an instance of FBM.Model to this class.
+ </summary>
+ <param name="arFBMModel">The model being mapped.</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModelv081.Model.MapToFBMModel(FactEngineForServices.FBM.Model@)">
+ <summary>
+ Maps an instance of this class to an instance of FBM.Model
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModelv081.Model.GetFactTypeDetails(FactEngineForServices.FBM.FactType@)">
+ <summary>
+ Gets the details of a FBM.FactType from the XMLModel.FactType in the Model (me)
+ </summary>
+ <param name="arFactType">The FactType for which the details are being retrieved</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModelv081.ORMModel.#ctor">
+ <summary>
+ Parameterless Constructor
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModel1.Model.MapFromFBMModel(FactEngineForServices.FBM.Model)">
+ <summary>
+ Maps an instance of FBM.Model to this class.
+ </summary>
+ <param name="arFBMModel">The model being mapped.</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModel1.Model.MapToFBMModel(FactEngineForServices.FBM.Model@)">
+ <summary>
+ Maps an instance of this class to an instance of FBM.Model
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModel1.Model.GetFactTypeDetails(FactEngineForServices.FBM.FactType@)">
+ <summary>
+ Gets the details of a FBM.FactType from the XMLModel.FactType in the Model (me)
+ </summary>
+ <param name="arFactType">The FactType for which the details are being retrieved</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModel1.ORMModel.#ctor">
+ <summary>
+ Parameterless Constructor
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModel11.Model.MapFromFBMModel(FactEngineForServices.FBM.Model)">
+ <summary>
+ Maps an instance of FBM.Model to this class.
+ </summary>
+ <param name="arFBMModel">The model being mapped.</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModel11.Model.MapToFBMModel(FactEngineForServices.FBM.Model@)">
+ <summary>
+ Maps an instance of this class to an instance of FBM.Model
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModel11.Model.GetFactTypeDetails(FactEngineForServices.FBM.FactType@)">
+ <summary>
+ Gets the details of a FBM.FactType from the XMLModel.FactType in the Model (me)
+ </summary>
+ <param name="arFactType">The FactType for which the details are being retrieved</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModel11.ORMModel.#ctor">
+ <summary>
+ Parameterless Constructor
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.XMLModel12.JoinPath._RolePath">
+ <summary>
+ The set of Roles traversed in order to form the JoinPath.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModel12.Model.MapFromFBMModel(FactEngineForServices.FBM.Model)">
+ <summary>
+ Maps an instance of FBM.Model to this class.
+ </summary>
+ <param name="arFBMModel">The model being mapped.</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModel12.Model.MapToFBMModel(FactEngineForServices.FBM.Model@)">
+ <summary>
+ Maps an instance of this class to an instance of FBM.Model
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModel12.Model.GetFactTypeDetails(FactEngineForServices.FBM.FactType@)">
+ <summary>
+ Gets the details of a FBM.FactType from the XMLModel.FactType in the Model (me)
+ </summary>
+ <param name="arFactType">The FactType for which the details are being retrieved</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModel12.ORMModel.#ctor">
+ <summary>
+ Parameterless Constructor
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.XMLModel13.JoinPath._RolePath">
+ <summary>
+ The set of Roles traversed in order to form the JoinPath.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:FactEngineForServices.XMLModel13.Model">
+ <summary>
+ v1.3 Adds the GUID field to the ValueType, FactType and RoleConstraint classes.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModel13.Model.MapFromFBMModel(FactEngineForServices.FBM.Model)">
+ <summary>
+ Maps an instance of FBM.Model to this class.
+ </summary>
+ <param name="arFBMModel">The model being mapped.</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModel13.Model.MapToFBMModel(FactEngineForServices.FBM.Model@)">
+ <summary>
+ Maps an instance of this class to an instance of FBM.Model
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModel13.Model.GetFactTypeDetails(FactEngineForServices.FBM.FactType@)">
+ <summary>
+ Gets the details of a FBM.FactType from the XMLModel.FactType in the Model (me)
+ </summary>
+ <param name="arFactType">The FactType for which the details are being retrieved</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModel13.ORMModel.#ctor">
+ <summary>
+ Parameterless Constructor
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.XMLModel14.JoinPath._RolePath">
+ <summary>
+ The set of Roles traversed in order to form the JoinPath.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:FactEngineForServices.XMLModel14.Model">
+ <summary>
+ v1.3 Adds the GUID field to the ValueType, FactType and RoleConstraint classes.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModel14.Model.MapFromFBMModel(FactEngineForServices.FBM.Model)">
+ <summary>
+ Maps an instance of FBM.Model to this class.
+ </summary>
+ <param name="arFBMModel">The model being mapped.</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModel14.Model.MapToFBMModel(FactEngineForServices.FBM.Model@)">
+ <summary>
+ Maps an instance of this class to an instance of FBM.Model
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModel14.Model.GetFactTypeDetails(FactEngineForServices.FBM.FactType@)">
+ <summary>
+ Gets the details of a FBM.FactType from the XMLModel.FactType in the Model (me)
+ </summary>
+ <param name="arFactType">The FactType for which the details are being retrieved</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModel14.ORMModel.#ctor">
+ <summary>
+ Parameterless Constructor
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.XMLModel15.JoinPath._RolePath">
+ <summary>
+ The set of Roles traversed in order to form the JoinPath.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:FactEngineForServices.XMLModel15.Model">
+ <summary>
+ v1.3 Adds the GUID field to the ValueType, FactType and RoleConstraint classes.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModel15.Model.MapFromFBMModel(FactEngineForServices.FBM.Model)">
+ <summary>
+ Maps an instance of FBM.Model to this class.
+ </summary>
+ <param name="arFBMModel">The model being mapped.</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModel15.Model.MapToFBMModel(FactEngineForServices.FBM.Model@)">
+ <summary>
+ Maps an instance of this class to an instance of FBM.Model
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModel15.Model.GetFactTypeDetails(FactEngineForServices.FBM.FactType@)">
+ <summary>
+ Gets the details of a FBM.FactType from the XMLModel.FactType in the Model (me)
+ </summary>
+ <param name="arFactType">The FactType for which the details are being retrieved</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModel15.ORMModel.#ctor">
+ <summary>
+ Parameterless Constructor
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.XMLModel16.JoinPath._RolePath">
+ <summary>
+ The set of Roles traversed in order to form the JoinPath.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:FactEngineForServices.XMLModel16.Model">
+ <summary>    
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModel16.Model.MapFromFBMModel(FactEngineForServices.FBM.Model)">
+ <summary>
+ Maps an instance of FBM.Model to this class.
+ </summary>
+ <param name="arFBMModel">The model being mapped.</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModel16.Model.MapToFBMModel(FactEngineForServices.FBM.Model@)">
+ <summary>
+ Maps an instance of this class to an instance of FBM.Model
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModel16.Model.GetFactTypeDetails(FactEngineForServices.FBM.FactType@)">
+ <summary>
+ Gets the details of a FBM.FactType from the XMLModel.FactType in the Model (me)
+ </summary>
+ <param name="arFactType">The FactType for which the details are being retrieved</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModel16.ORMModel.#ctor">
+ <summary>
+ Parameterless Constructor
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.XMLModel.JoinPath._RolePath">
+ <summary>
+ The set of Roles traversed in order to form the JoinPath.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:FactEngineForServices.XMLModel.Model">
+ <summary>
+ v1.3 Adds the GUID field to the ValueType, FactType and RoleConstraint classes.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModel.Model.MapFromFBMModel(FactEngineForServices.FBM.Model,System.Boolean)">
+ <summary>
+ Maps an instance of FBM.Model to this class.
+ </summary>
+ <param name="arFBMModel">The model being mapped.</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModel.Model.MapToFBMModel(FactEngineForServices.FBM.Model@,System.ComponentModel.BackgroundWorker@,System.Boolean)">
+ <summary>
+ Maps an instance of this class to an instance of FBM.Model
+ </summary>
+ <param name="arModel">The FBM Model to map to.</param>
+ <param name="aoBackgroundWorker">For reporting progress. Start at 60%.</param>
+ <param name="abSkipAlreadyLoadedModelElements">True if to test whether ModelElements have already been loaded.</param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModel.Model.MapToFBMPages(FactEngineForServices.FBM.Model@,System.ComponentModel.BackgroundWorker@)">
+ <summary>
+ 
+ </summary>
+ <param name="arModel"></param>
+ <param name="aoBackgroundWorker"></param>
+</member>
+<member name="M:FactEngineForServices.XMLModel.Model.GetFactTypeDetails(FactEngineForServices.FBM.FactType@,FactEngineForServices.XMLModel.FactType@)">
+ <summary>
+ Gets the details of a FBM.FactType from the XMLModel.FactType in the Model (me)
+ </summary>
+ <param name="arFactType">The FactType for which the details are being retrieved</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.XMLModel.ORMModel.#ctor">
+ <summary>
+ Parameterless Constructor
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.ORMQL.Processor.GetParseTreeTokens(System.Object@,FactEngineForServices.TinyPG.ParseNode@)">
+ <summary>        
+ORMQL Mode. Gets the tokens from the Parse Tree.
+Walks the ParseTree and finds the tokens as per the Properties/Fields of the ao_object passed to the procedure.
+  i.e. Based on the type of token at the Root of the ParseTree, the software dynamically creates ao_object such that 
+  it contains the tokens that it wants returned.
+ </summary>
+ <param name="ao_object">is of runtime generated type DynamicCollection.Entity</param>
+ <param name="aoParseTreeNode">ParseNode as from TinyPG Parser</param>
+ <remarks></remarks>
+</member>
+<member name="P:FactEngineForServices.ORMQL.Recordset.ErrorReturned">
+ <summary>
+ True if an error was returned when creating the recordset. See ErrorString for error details.
+ </summary>
+ <returns></returns>
+</member>
+<member name="F:FactEngineForServices.ORMQL.Recordset.StatementType">
+ <summary>
+ The type of statement made by the User. E.g. a DESCRIBEStatement.
+ </summary>
+</member>
+<member name="F:FactEngineForServices.ORMQL.Recordset.ModelElement">
+ <summary>
+ As used in a DESCRIBE Statement, is pushed back to the client to process.
+ </summary>
+</member>
+<member name="M:FactEngineForServices.ORMQL.Recordset.#ctor">
+ <summary>
+ Parameterless New
+ </summary>
+</member>
+<member name="M:FactEngineForServices.ORMQL.Recordset.#ctor(FactEngineForServices.FactEngine.Constants.pcenumFEQLStatementType)">
+ <summary>
+ Constructor
+ </summary>
+ <param name="aiStatementType">The type of Statement raised by the User.</param>
+</member>
+<member name="M:FactEngineForServices.TinyPG.ParseTree.Eval(System.Object[])">
+ <summary>
+ this is the entry point for executing and evaluating the parse tree.
+ </summary>
+ <param name="paramlist">additional optional input parameters</param>
+ <returns>the output of the evaluation function</returns>
+</member>
+<member name="M:FactEngineForServices.TinyPG.ParseNode.Eval(FactEngineForServices.TinyPG.ParseTree,System.Object[])">
+ <summary>
+ this implements the evaluation functionality, cannot be used directly
+ </summary>
+ <param name="tree">the parsetree itself</param>
+ <param name="paramlist">optional input parameters</param>
+ <returns>a partial result of the evaluation</returns>
+</member>
+<member name="M:FactEngineForServices.TinyPG.Scanner.Scan(FactEngineForServices.TinyPG.TokenType[])">
+ <summary>
+ executes a lookahead of the next token
+ and will advance the scan on the input string
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.TinyPG.Scanner.LookAhead(FactEngineForServices.TinyPG.TokenType[])">
+ <summary>
+ returns token with longest best match
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FBM.Page.CreateEntityRelationshipDiagram(System.ComponentModel.BackgroundWorker@)">
+ <summary>
+ Creates an Entity Relationship Diagram from an ORM-Diagram Page.
+ Puts the ERD on a Page under the same Richmond.Model as the ORM-Diagram of the Page,
+   and under the same Node/Section on the Model Tree.
+ </summary>
+</member>
+<member name="M:FactEngineForServices.FBM.Page.CreatePropertyGraphSchema(System.ComponentModel.BackgroundWorker@)">
+ <summary>
+ Creates an PropertGraphSchema Diagram from an ORM-Diagram Page.
+ Puts the PGS-Diagram on a Page under the same Richmond.Model as the ORM-Diagram
+   and under the same Node/Section on the Enterprise Model Tree.
+ </summary>    
+</member>
+<member name="M:FactEngineForServices.FBM.Page.DeleteERDElementsByAttributeId(System.String)">
+ <summary>
+ Removes the CMML Facts relating to the Attribute that is being deleted from the Page.
+ </summary>
+ <param name="asAttributeId"></param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Page.loadRelationsForEntity(FactEngineForServices.ERD.Entity@,System.Boolean)">
+ <summary>
+ PRECONDITION: Relations are already created in the RDS Model of the FBM.Model. i.e. Is not used to create relationships, but load them onto a Page.
+ </summary>
+ <param name="arEntity"></param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Page.removeCMMLIndexesForEntity(FactEngineForServices.ERD.Entity@)">
+ <summary>
+ NB Not used, because Index information for ERDs/PGSs are retrieved from the RDS level (in memory).
+ i.e. Indexes are removed at the CMML Model level, but no need at the Page level.
+ 20180714-VM-This code is for reference only and can probably be removed at a later stage.
+ </summary>
+ <param name="arEntity"></param>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.Page.CopiedPageId">
+ <summary>
+ Used when copying the Page to the Clipboard so don't paste a Page back on itself.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.Page.CopiedModelId">
+ <summary>
+ Used when copying the Page to the Clipboard. Used to determine if signature checking is required when pasting to a Model.
+ i.e. It 'is' required to check signatures of pasted ModelObjects when pasting to a different Model. Not required when pasting to the same Model.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.Page.IsInvalidated">
+ <summary>
+ Set to True by Me.Invalidate method. Set to False by frmDiagramORM (UML etc) on completion of .Diagram.DrawBackground.
+   NB Used predominantly to refresh the Verbalisation View.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Page.#ctor">
+ <summary>
+ Parameterless New
+ </summary>
+</member>
+<member name="M:FactEngineForServices.FBM.Page.Clone(FactEngineForServices.FBM.Model@,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+ <summary>
+ Makes a copy/clone of the Page. Every ModelElement is the same except for the Model and Page that it is related to.
+ </summary>
+ <param name="arModel">The Model to which the cloned Page is allocated.</param>
+ <returns>A new Page object (as clone of the Page being cloned).</returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Page.AddSelectedObject(FactEngineForServices.FBM.ModelObject@)">
+ <summary>
+ Adds a ModelObject to the list of SelectedObjects for the Page
+ </summary>
+ <param name="arModelObject">The ModelObject to add to the list</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Page.AreAllSelectedObjectsRoles">
+ <summary>
+ RETURNS TRUE if all the SelectedObjects are role type objects otherwise it returns FALSE
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Page.getModelElement(FactEngineForServices.FBM.ModelObject,System.Boolean)">
+ <summary>
+ 
+ </summary>
+ <param name="arModelElement"></param>
+ <param name="abReturnObjectifiedFactType">When getting the Supertype for a SubtypeRelationshipInstance you need to return the FactTypeInstance</param>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FBM.Page.FindBlankSpaceInRelationToModelObject(FactEngineForServices.FBM.ModelObject@,System.Boolean@)">
+ <summary>
+ Finds a blank space in relation to a ModelObject on a Page, ostensibly for the placing of another ModelObject in relation to that given ModelObject.
+ </summary>
+ <param name="arModelObject">The ModelObject around which a blank space on the canvas will be found.</param>
+ <param name="abEmptySpaceFound">Set to TRUE if a blank space is found, else set to FALSE</param>
+ <returns>A PointF object that represents where a blank space exists on the canvas in relation to the given ModelObject.</returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Page.ClearFast(System.Boolean)">
+ <summary>
+ Clears the Page of ModelObjects and optionally clears the Page's Diagram.
+ </summary>
+ <param name="abClearDiagram">True: Clears the Page's Diagram (visible objects). Defaults fo False</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Page.Load(System.Object)">
+ <summary>
+ Page loads from database and adds itslef to the Model
+ NB Is used in threading load of Model 
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Page.RemoveModelObject(FactEngineForServices.FBM.ModelObject@,System.Boolean)">
+ <summary>
+ Removes a ModelObject (EntityType, ValueType, FactType) from the Page.
+ </summary>
+ <param name="arModelObject"></param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Page.Save(System.Boolean,System.Boolean)">
+ <summary>
+ 
+ </summary>
+ <param name="abRapidSave">True if Page is new to the database, else False</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Page.Invalidate">
+ <summary>
+ Call when it is necessary to reselect a PageObject for Verbalisation.
+   NB See frmDiagramORM (or UML etc).Diagram.RedrawBackground, which resets Me.IsInvalidated to False. i.e. After invalidation of the Page, Me.IsInvalidated = False
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.EntityTypeInstance.getBaseModelObject">
+ <summary>
+ Returns the Model level ModelObject for this Instance.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.EntityTypeInstance.SetReferenceMode">
+ <summary>
+ Sets the ReferenceMode objects for a SimpleReferenceScheme.
+   20150910-VM-NB May need to change the name of this method to SetReferenceModeObjects and delete the existing SetReferenceModeObjects.
+   The existing SetReferenceModeObjects is called when the Page loads. This method also seems to fill that role.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.FactDataInstance._FactData">
+ <summary>
+ References the tFactData instance within the Model layer of the MVC pattern.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.FactDataInstance._JoinedObjectType">
+ <summary>
+ The ObjectType joined by the Role to which this FactDataInstance relates.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:FactEngineForServices.FBM.FactDataInstance.Data">
+ <summary>
+ The Data stored for the Role for the Fact.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactDataInstance.Clone(FactEngineForServices.FBM.Page@,FactEngineForServices.FBM.FactInstance@)">
+ <summary>
+ Clones the FactDataInstance.
+ </summary>
+ <param name="arPage"></param>
+ <returns></returns>
+ <remarks>e.g. Used when a complete Clone of a Model (and its set of Pages) is made.</remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactDataInstance.FactData_RemovedFromModel(System.Boolean)">
+ <summary>
+ If not DeleteAll, then the ConceptInstance/s for the Fact need to be removed from the database elsewhere.
+   The reason for this is that some ConceptInstances are Values for a Role, and may not belong to the Fact being deleted.
+ </summary>
+ <param name="abDeleteAll"></param>
+</member>
+<member name="M:FactEngineForServices.FBM.FactInstance.EnumerateDataAsKey(System.Collections.Generic.List{System.String})">
+ <summary>
+ Enumerates the Data of the Fact as a key value
+ </summary>
+ <returns>String representing a key of the data within the Fact</returns>
+ <remarks>Used in processing ORMQL statements. e.g. Where DISTINCT keyword is used in a SELECT statement</remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactTypeDerivationText.#ctor">
+ <summary>
+ Parameterless New
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.FactTypeInstance.SubtypeConstraintInstance">
+ <summary>
+ If the FactType represents a SubtypeConstraint, is the SubtypeConstraintInstance that this FactType represents.
+ Used for joining RoleConstraints to SubtypeConstraints on a Page.Diagram. The RoleConstraint.RoleConstraintRole.Link joins the FactType.SubtypeConstraintInstance.Link
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.FactTypeInstance.SubtypeRelationshipInstance">
+ <summary>
+ If the FactType represents a SubtypeRelationship, is the SubtypeRelationship that this FactType represents.
+ Used for joining RoleConstraints to SubtypeConstraints on a Page.Diagram. The RoleConstraint.RoleConstraintRole.Link joins the FactType.SubtypeConstraintInstance.Link
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactTypeInstance.CloneFacts">
+ <summary>
+ Creates a cloned list of the Facts in the FactType
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactTypeInstance.RemoveFromPage(System.Boolean)">
+ <summary>
+ Removes the FactTypeInstance from the Page on which it is placed.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactTypeInstance.RemoveFact(FactEngineForServices.FBM.FactInstance@)">
+ <summary>
+ Deletes a FactInstance from a FactTypeInstance.
+   NB Does not remove the Fact from the Model level FactType.
+ </summary>
+ <param name="arFactInstance">The FactInstance to be deleted.</param>        
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactTypeInstance.Hide">
+ <summary>
+ Hides the FactTypeInstance if if is displayed on the Page.
+   NB Predominantly used for hiding a SubtypeRelationship FactTypeInstance after it has been shown.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactTypeInstance.getBaseModelObject">
+ <summary>
+ Returns the Model level ModelObject for this Instance.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactTypeInstance.GetCountRolesJoiningFactTypes">
+ <summary>
+ Returns a count of the Roles within the RoleGroup of the FactType, where those Roles join a FactType.
+ </summary>
+ <returns></returns>
+ <remarks>Example of use: Sorting FactTypes.</remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactTypeInstance.GetOtherRoleOfBinaryFactType(System.String)">
+ <summary>
+ RETURNS the complimentory Role of the binary FactType in which asRoleId is involved 
+ </summary>
+ <param name="asRoleId">The id of the Role for which the complimentory Role is to be retrieved.</param>
+ <returns></returns>
+ <remarks>Assumes that the role_record group is populated returns an error if called with a l_RoleId that belongs to other than a binary group</remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactTypeInstance.RemoveRole(FactEngineForServices.FBM.RoleInstance@)">
+ <summary>
+ Removes a RoleInstance from the RoleGroup of the FactTypeInstance
+ </summary>
+ <param name="arRoleInstance"></param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactTypeInstance.Save(System.Boolean)">
+ <summary>
+ Saves the FactTypeInstance to the database
+ </summary>
+ <param name="abRapidSave"></param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactTypeInstance.Show">
+ <summary>
+ Shows the FactTypeInstance if it has already been DisplayedAndAssociated. e.g. After the 'Hide' method has been called.
+   Predominantly used when showing/hiding a FactType/Instance for a SubtypingRelationship.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactTypeInstance.SortRoleGroup">
+ <summary>
+ Resorts the RoleGroup of the FactType with the associated ObjectTypes of each Role for asthetic reasons.
+ i.e. So the Links from the Roles in the FactType are visually appealling on the Page.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactTypeInstance.SetSuitableFactTypeReading">
+ <summary>
+ Finds a suitable FactTypeReading for the FactTypeInstance and displays that FactTypeReading.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactTypeInstance.MoveToBetweenAssociatedModelObjects(System.Boolean)">
+ <summary>
+ Moves the FactTypeInstance to a position between the ModelElements joined by the Roles of the FactType.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.PageObject.RefreshShape">
+ <summary>
+ Prototype method, RefreshShape.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.RoleConstraintInstance.CreatingArgument">
+ <summary>
+ True if the user is in the process of creating an Argument for the RoleConstraint, else False.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.RoleConstraintInstance.getBaseModelObject">
+ <summary>
+ Returns the Model level ModelObject for this Instance.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.RoleConstraintRoleInstance.SubtypeConstraintInstance">
+ <summary>
+ If the RoleConstraintRole represents a link to a SubtypingConstraint then stores a reference to the SubtypeConstraintInstance.
+   This is so that the 'link' of the RoleConstraintRole can join to the line/link of the Subtyping constraint on the diagram.
+   NB The RoleConstraintRole (obviously) joins to a 'Role', but on the diagram the link (for this particular type of RoleConstraintRole)
+   joins to the line/arrow that represents the Subtype relationship between a Subtype and its Supertype.
+   i.e. The member SubtypeConstraintInstances is used for RoleConstraintRoles on RoleConstraints that represent constraints between 
+   SubtypingRelationships. e.g. An ExclusionConstraint representing 'Person IS A Student OR Person IS A Teacher BUT NOT BOTH'.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.RoleValueConstraint._EntityTypeInstance">
+ <summary>
+ If Role is on ReferenceModeFactType, then the EntityTypeInstance for which the FactType exists.
+   Used for when the ReferenceScheme (FactType) is shown/hidden. See event, ExpandReferenceModeChanged.
+ </summary>
+</member>
+<member name="M:FactEngineForServices.FBM.RoleInstance.WriteXML(System.Xml.XmlWriter)">
+ <summary>
+Serializes all public, private and public fields except the one 
+  which are the hidden fields for the eventhandlers
+ </summary>
+ <remarks></remarks>
+ 
+</member>
+<member name="M:FactEngineForServices.FBM.RoleInstance.Role_RoleJoinModified(FactEngineForServices.FBM.ModelObject@)">
+ <summary>
+ Handles the event when the Join of a Role changes to a different ModelObject
+ </summary>
+ <param name="arModelObject"></param>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.SubtypeRelationshipInstance.ModelElement">
+ <summary>
+ The EntityType for which the SubTypeIstance (line) acts as View/Proxy.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.SubtypeRelationshipInstance.FactType">
+ <summary>
+ The FactTypeInstance of the FactType that represents the Subtype
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.SubtypeRelationshipInstance.#ctor">
+ <summary>
+ Parameterless Constructor
+ </summary>
+</member>
+<member name="M:FactEngineForServices.FBM.SubtypeRelationshipInstance.Clone(FactEngineForServices.FBM.Page@,System.Boolean)">
+ <summary>
+ PRECONDITIONS: The ObjectType, ParentObjectType and SubtypeRelationshipFactType must already exist on the target Page (arPage)
+ </summary>
+ <param name="arPage">The target Page to which the SubtypeRelationshipInstance is cloned.</param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.ValueTypeInstance.getBaseModelObject">
+ <summary>
+ Returns the Model level ModelObject for this Instance.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.ValueTypeInstance.IsReferenceModeForFactTypeOnPage">
+ <summary>
+ Returns True if the ValueType represents the ReferenceMode/Scheme of a FactType(Instance) on the Page.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.changeCMMLAttributeName(FactEngineForServices.RDS.Column@)">
+ <summary>
+ Changes the name of an Attribute in the RDS
+ </summary>
+ <param name="arColumn"></param>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.connectToDatabase">
+ <summary>
+ Connects to the database if it is not already connected
+ </summary>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.moveRelationsOfFactTypeToRespectiveLinkFactTypes(FactEngineForServices.FBM.FactType)">
+ <summary>
+ Sets the ResponsibleFactType of existing Relations for the FactType to the relations respective LinkFactType.
+ This method called when a suitable FactType is objectified.
+ NB See also the converse moveRelationsOfLinkFactTypesToRespectiveFactType
+ </summary>
+ <param name="arFactType"></param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.RemoveFactTypeReferencesFromCore(FactEngineForServices.FBM.FactType@)">
+ <summary>
+ Called when a FactType is removed from a Model and that Model contains a Language within the Core that references that FactType.
+ </summary>
+ <param name="arFactType"></param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.aaAddERDAttributeForRole(FactEngineForServices.FBM.Role@)">
+ <summary>
+ Adds the required Core CMML Elements for an ERD Attribute based on the given Role.
+ PreConditions: It is already established that the Role is an ERD Property Role.
+ </summary>
+ <param name="arRole"></param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.createEntityRelationshipArtifacts(System.ComponentModel.BackgroundWorker@)">
+ <summary>
+ Creates the Entity Relationship Diagram fact/data artifacts within the (existing) ERD (Meta)Model.
+ Preconditions: The 'Core' set of ERD/PGS ModelObjects have been injected within the Model from the Model called, 'Core'.
+ </summary>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.generateEntityArtifacts">
+ <summary>
+ Genreates the CMML Entity artifacts. Called from Me.createEntityRelationshipArtifacts.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.removeColumnsIndexColumnsForRole(FactEngineForServices.FBM.Role@)">
+ <summary>
+ PRECONDITION: The Role hasn't already been removed from the FactType.
+ </summary>
+ <param name="arRole"></param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.getTablesWithColumnsThatTransgressRole(FactEngineForServices.FBM.Role,System.Collections.Generic.List{FactEngineForServices.RDS.Table}@,System.Collections.Generic.List{FactEngineForServices.FBM.Role}@)">
+ <summary>
+ Searches recursively upwards to find tables with Columns that transgress the give Role.
+ </summary>
+ <param name="arRole">The Role that is transgressed by Columns in a Table.</param>
+ <param name="aarTable">The returned list of Tables that transgress the arRole.</param>
+ <remarks>Transgression means that the Role is neither the Responsible or ActiveRole of a Column, but is necessary in the formation of the Column.</remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.Model.ContainsLanguage">
+ <summary>
+ A list of Languages that the ORM Model represents. Defaults to including ORM, but may include EntityRelationshipDiagrams, PropertyGraphSchemas etc
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.Model.StoreAsXML">
+ <summary>
+ True if the Model is saved to XML rather than to the database.
+ </summary>
+</member>
+<member name="F:FactEngineForServices.FBM.Model.__Page">
+ <summary>
+ The list of Pages within the Model.
+ NB LinFu requires Overridable Properties to work.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.Model.RDS">
+ <summary>
+ The Relational Data Schema for the Model.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.Model.IsDatabaseSynchronised">
+ <summary>
+ True if modifying the model modifies the database schema of the connected database.
+ </summary>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.#ctor(System.String,System.String,System.String,System.String,FactEngineForServices.publicConstantsFBM.pcenumLanguage,System.String)">
+ <summary>
+ 
+ </summary>
+ <param name="aiEnterprise_id"></param>
+ <param name="aiSubject_area_id"></param>
+ <param name="aiProject_id"></param>
+ <param name="aiModelId"></param>
+ <param name="aiLanguageId"></param>
+ <param name="as_ORMModel_name"></param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.AddRoleConstraint(FactEngineForServices.FBM.RoleConstraint@,System.Boolean,System.Boolean,FactEngineForServices.FBM.ConceptInstance,System.Boolean,FactEngineForServices.FBM.ModelObject@)">
+ <summary>
+ Adds a Role Constraint to the list of Role Constraints in the Model.
+   NB Adds a Dictionary Entry for the Role Constraint to the Model's Model Dictionary.
+ </summary>
+ <param name="arRoleConstraint">The Role Constraint to be added to the Model.</param>
+ <remarks>Use this method if it known that the Role Constraint is unique to the model, otherwise use tORMModel.CreateRoleConstraint.</remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.AreRolesCompatible(FactEngineForServices.FBM.Role@,FactEngineForServices.FBM.Role@)">
+ <summary>
+ Checks to see whether two Roles are compatible. i.e. Same JoinedObjectType, or subtype/supertype thereof.
+   * See also Me.AreObjectTypesSupertypesSubtypesOfEachOther
+ </summary>
+ <param name="arFirstRole">The first Role to be checked for compatibility.</param>
+ <param name="arSecondRole">The second Role to be checked for compatibility.</param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.AddModelDictionaryEntry(FactEngineForServices.FBM.DictionaryEntry@,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+ <summary>
+ Adds an FBM.DictionaryEntry to the Model's 'ModelDictionary' (if it does not already exist).
+   Returns the new or existing DictionaryEntry
+ </summary>
+ <param name="arDictionaryEntry">The DictionaryEntry being added to the ModelDictionary.</param>
+ <param name="abAppendRealisations">Defaults to True. If True the Realisations for the DictionaryEntry is appended with the Concept of the DictionaryEntry</param>
+ <param name="abStraightSave">Adds the DictionaryEntry without checking whether it already exists. Use when have already checked</param>
+ <remarks>This function can be used to check if a DictionaryEntry already exists in the ModelDictionary. Set abAppendRealisations to False if you don't wish for the Realisations of the DictionaryEntry to be appended with the Concept of the DictionaryEntry.</remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.CreateEntityType(System.String,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+ <summary>
+ Creates a new EntityType for the Model (including a ValueType and FactType for the ReferenceMode of the EntityType)
+ PRECONDITION: Have already checked to see that the asEntityTypeName does not clash with another ModelObject.
+ </summary>
+ <returns>tEntityType</returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.getFactTypeByModelObjectsFactTypeReading(System.Collections.Generic.List{FactEngineForServices.FBM.ModelObject},FactEngineForServices.FBM.FactTypeReading,System.Boolean,FactEngineForServices.FBM.FactTypeReading@,FactEngineForServices.FBM.PredicatePart@)">
+ <summary>
+ 202007-VM-Created
+ Returns a FactType, else Nothing, if the list of ModelObjects and FactTypeReading match.
+   * Used to thwart attempts to create more than one FactType with the same reading.
+ </summary>
+ <param name="aarModelObject"></param>
+ <param name="arFactTypeReading"></param>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.CreateFact(FactEngineForServices.FBM.FactType@,System.Collections.Generic.List{System.String},System.Boolean)">
+ <summary>
+ Creates a random fact for the specified FactType.
+ </summary>
+ <param name="arFactType">The FactType for which a random Fact will be created.</param>
+ <returns>A Fact with random FactData.</returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.CreateFactType(System.String,System.Collections.Generic.List{FactEngineForServices.FBM.ModelObject}@,System.Boolean,System.Boolean,System.Boolean,FactEngineForServices.FBM.Role,System.Boolean,FactEngineForServices.FBM.Page@,System.Boolean,System.Boolean)">
+ <summary>
+ Creates a new FactType and adds it to the Model if required.
+ Client/Server: Doesn't broadcast any event within this method.
+ </summary>
+ <param name="asFactTypeName"></param>
+ <param name="aarReferencedObject"></param>
+ <param name="abIsReferenceModeFactType"></param>
+ <param name="abMakeModelDirty"></param>
+ <param name="abIsLinkFactType"></param>
+ <param name="arLinkFactTypeRole"></param>
+ <param name="abAddtoModel"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.CreateUniqueEntityTypeName(System.String,System.Int32)">
+ <summary>
+ Creates a unique EntityType.Id/Name/Symbol
+ </summary>
+ <param name="asRootEntityTypeName">The root name to start with.</param>
+ <param name="aiCounter">Start at 0.</param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.CreateUniqueModelName(System.String,System.Int32)">
+ <summary>
+ Queries the database and creates a unique Model Name based on the given asModelName and liSequenceNr arguments.
+ </summary>
+ <param name="asModelName">The base Model Name from which a unique Model Name will be derived.</param>
+ <param name="liSequenceNr">The starting Sequence Number to be extended to the Model Name to create a new and unique Model Name. Increments by 1 for each failed test of uniqueness. NB Start at 0.</param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.CreateValueType(System.String,System.Boolean,FactEngineForServices.publicFBMConstants.pcenumORMDataType,System.Int32,System.Int32)">
+ <summary>
+ Creates a ValueType and adds it to the model.
+ </summary>
+ <param name="asValueTypeName"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.CreateRoleConstraint(FactEngineForServices.publicConstants.pcenumRoleConstraintType,System.Collections.Generic.List{FactEngineForServices.FBM.Role},System.String,System.Int32,System.Boolean,System.Boolean)">
+ <summary>
+ Creates a new Role Constraint for a Model.
+   NB Adds a Dictionary Entry for the Role Constraint in the Model's Model Dictionary.
+ </summary>
+ <param name="aiRoleConstraintType"></param>
+ <param name="aarRole"></param>
+ <returns>A new unique Role Constraint, as created for the Model.</returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.DeprecateRealisationsForDictionaryEntry(FactEngineForServices.FBM.DictionaryEntry@,FactEngineForServices.publicConstants.pcenumConceptType)">
+ <summary>
+ Deprecates the Realisations for a DictionaryEntry in the ModelDictionary
+ </summary>
+ <param name="arDictionaryEntry"></param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.EmptyModel">
+ <summary>
+ Empties all Model Objects from the Model.
+   NB Does not delete the Model from the database.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.RemoveFromDatabase">
+ <summary>
+ Removes all Model Objects from the Model and deletes the Model from the database.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.RemoveRoleConstraint(FactEngineForServices.FBM.RoleConstraint@,System.Boolean,System.Boolean,System.Boolean)">
+ <summary>
+ 
+ </summary>
+ <param name="arRoleConstraint"></param>
+ <param name="abCheckForErrors"></param>
+ <param name="abBroadcastInterfaceEvent"></param>
+ <param name="abReplacingRoleConstraint">If replacing existing RoleConstraint, then don't remove RDSRelation table for the right circumstances.</param>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.RemoveRolesThatReferenceNothing(System.Boolean)">
+ <summary>
+ Removes Roles that reference Nothing. i.e. e.g. When the User doesn't assign a ModelObject to a Role.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.ReviewModelErrors">
+ <summary>
+ Detects ModelErrors and adds/removes them to/from the Model.ModelError list.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.Save(System.Boolean)">
+ <summary>
+ 
+ </summary>
+ <param name="abRapidSave"></param>        
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.makeAllPagesClean">
+ <summary>
+ Makes all Page.IsDirty flags of each of the Pages within the Model = False.
+ Generally called in ClientServer mode and where another instance of Boston has saved the Model.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.MergePages(FactEngineForServices.FBM.Page@,FactEngineForServices.FBM.Page@)">
+ <summary>
+ Merges Page2 into Page1.
+ </summary>
+ <param name="arOriginPage"></param>
+ <param name="arTargetPage"></param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.GetConceptTypeByNameFuzzy(System.String,System.String@)">
+ <summary>
+ Matches a ModelElement.Id/Name even if the case of the letters is incorrect
+ </summary>
+ <param name="asModelElementName">The Id/Name of the ModelElement</param>
+ <param name="asActualModelElementName">The actual Id/Name of the ModelElement, with correct Case</param>
+ <returns>The ConceptType of the ModelElement</returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.getModelObjects">
+ <summary>
+ Returns a list of all the ValueTypes, EntitTypes and FactTypes in the Model
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.GetParseTreeTokens(System.Object@,FactEngineForServices.TinyPG.ParseNode@)">
+ <summary>        
+ORMQL Mode. Gets the tokens from the Parse Tree.
+Walks the ParseTree and finds the tokens as per the Properties/Fields of the ao_object passed to the procedure.
+  i.e. Based on the type of token at the Root of the ParseTree, the software dynamically creates ao_object such that 
+  it contains the tokens that it wants returned.
+ </summary>
+ <param name="ao_object">is of runtime generated type DynamicCollection.Entity</param>
+ <param name="aoParseTreeNode">ParseNode as from TinyPG Parser</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.ExistsJoinPathForRoles(System.Collections.Generic.List{FactEngineForServices.FBM.Role}@,FactEngineForServices.publicConstantsFBM.pcenumJoinPathError@,FactEngineForServices.FBM.RoleConstraint)">
+ <summary>
+ Returns TRUE if there is a JoinPath for all of the Roles associated with the RoleConstraintArgument, else returns FALSE.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.hasCountFactTypesBetweenModelElements(FactEngineForServices.FBM.ModelObject@,FactEngineForServices.FBM.ModelObject@)">
+ <summary>
+ Gets the count of FactTypes linking two ModelElements
+ </summary>
+ <param name="arModelElement1"></param>
+ <param name="arModelElement2"></param>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.IncrementRealisationsForDictionaryEntry(FactEngineForServices.FBM.DictionaryEntry@)">
+ <summary>
+ Deprecates the Realisations for a DictionaryEntry in the ModelDictionary
+ </summary>
+ <param name="arDictionaryEntry"></param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.Load(System.Boolean,System.Boolean,System.ComponentModel.BackgroundWorker@,System.Boolean)">
+ <summary>
+ Loads the Model from the database.
+ </summary>
+ <param name="abLoadPages"></param>
+ <param name="abUseThreading"></param>
+ <param name="aoBackgroundWorker">Used for Prgress reporting.</param>
+ <param name="abSkipAlreadyLoadedModelElements">True if to test whether ModelElements have already been loaded.</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.LoadFromXML(System.ComponentModel.BackgroundWorker@,System.Boolean,System.String)">
+ <summary>
+ Loads an XML file containing a FBM model into the Model.
+ </summary>
+ <param name="aoBackgroundWorker">BackgroundWorker for displaying the percentage of Model loaded.</param>
+ <param name="abSkipAlreadyLoadedModelElements">True if to test whether ModelElements have already been loaded.</param>
+ <param name="asFileLocationName">The path (file location and name) to the XML file containing the FBM model."</param>
+</member>
+<member name="M:FactEngineForServices.FBM.Model.AddCoreSTDModelElements(System.ComponentModel.BackgroundWorker@)">
+ <summary>
+ Injects v2.0 of the Core into the Model.
+ IMPORTANT: Assumes that V1.0  (ERD/PGS) model elements already in the Model.
+ </summary>
+ <param name="aoBackgroundWorker"></param>
+</member>
+<member name="F:FactEngineForServices.FBM.Concept.isDirty">
+ <summary>
+ Used for saving; to make saving much faster. Only hit the database if need to. See also Me.MakeDirtry
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Concept.Save(System.Boolean)">
+ <summary>
+ Saves the Concept to the database.
+ </summary>
+ <param name="abRapidSave">Never used for Concepts. Always check to see if the Concept Exists</param>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.DictionaryEntry._Concept">
+ <summary>
+ Me.Symbol cannot be linked to for WithEvents in FactData instances, so need an instance of a Concept from which 'Public WithEvents Concept as FBM.Concept' can be declared in FactData/Instance
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.DictionaryEntry.ConceptType">
+ <summary>
+ See Me.EqualsByOtherConceptType
+ Only used to check if a DictionaryEntry has other ConceptTypes than the one specified.
+ Used to check if a DictionaryEnty should be removed from the Model.ModelDictionary and the database.         
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.DictionaryEntry.EqualsByOtherConceptType(FactEngineForServices.FBM.DictionaryEntry)">
+ <summary>
+ Used to see if a DictionaryEntry exists but for a ConceptType other than the provided DictionaryEntry.ConceptType
+ </summary>
+ <param name="other"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.DictionaryEntry.AddConceptType(FactEngineForServices.publicConstants.pcenumConceptType)">
+ <summary>
+ Adds a ConceptType to a DictionaryEntry.
+   NB A DictionaryEntry may have many ConceptTypes.
+ </summary>
+ <param name="aiConceptType"></param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.DictionaryEntry.GetConceptType">
+ <summary>
+ Returns the ConceptType of the DictionaryEntry.
+   NB Should only be used in Model.AddModelDictionaryEntry
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.DictionaryEntry.isGeneralConceptOnly">
+ <summary>
+ Returns TRUE if the DictionaryEntry is only of ConceptType, "GeneralConcept" and no other ConceptType, else returns FALSE
+ </summary>
+ <returns>Returns TRUE if the DictionaryEntry is only of ConceptType, "GeneralConcept" and no other ConceptType, else returns FALSE</returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.EntityType.CompareSubtypeConstraintExistance(FactEngineForServices.FBM.EntityType,FactEngineForServices.FBM.EntityType)">
+ <summary>
+ Used to sort EntityTypes based on whether they have a SubtypeConstraint or not. Those with not first.
+ </summary>
+ <param name="aoA"></param>
+ <param name="aoB"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.EntityType.CompareEntityTypeNames(FactEngineForServices.FBM.EntityType,FactEngineForServices.FBM.EntityType)">
+ <summary>
+ Used to 'Sort' Enumerated lists Of FBM.tEntityType
+ </summary>
+ <param name="ao_a"></param>
+ <param name="ao_b"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.EntityType.AddBinaryRelationToValueType(FactEngineForServices.FBM.ValueType@,FactEngineForServices.publicConstants.pcenumBinaryRelationMultiplicityType)">
+ <summary>
+ Adds a BinaryFactType relation between the EntityType and a ValueType. Adds the ValueType to the Model if it does not already exist.
+ </summary>
+ <param name="arValueType"></param>
+ <param name="aiRelationMultiplicityValue"></param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.EntityType.EnumerateInstance(System.String)">
+ <summary>
+ If the EntityType has a Compound ReferenceMode returns an enumeration of the Instance/Identity,
+   ELSE returns the supplied Instance
+ </summary>
+ <param name="asInstance"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.EntityType.ExistsRolesAssociatedWithEntityType(System.Boolean)">
+ <summary>
+ Returns TRUE if there are any Roles (within FactTypes) that are associated with the EntityType, else returns FALSE
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.EntityType.getCorrespondingRDSTable(System.Boolean)">
+ <summary>
+ PRECONDITION: FactType must have a corresponding RDS Table. Used to save typing.
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FBM.EntityType.ExistsSubyTypeForEntityType">
+ <summary>
+ Returns TRUE if there are any Subtypes of the EntityType else returns false.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.EntityType.ChangeModel(FactEngineForServices.FBM.Model@,System.Boolean)">
+ <summary>
+ Changes the Model of the EntityType to the target Model.
+ </summary>
+ <param name="arTargetModel">The Model to which the EntityType will be associated on completion of this method.</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.EntityType.CreateReferenceMode(System.String,System.String,FactEngineForServices.publicFBMConstants.pcenumORMDataType,System.Boolean)">
+ <summary>
+ Creates a ReferenceMode where there is none. Sets up ReferenceModeFactType, ReferenceModeValueType, ReferenceModeRoleConstraint, PreferredIdentifierRCId.
+ </summary>
+ <param name="asReferenceMode">The ReferenceMode to be assigned to the EntityType</param>
+ <param name="asValueTypeName">The name for the referenced ValueType if it is already known.</param>
+ <remarks>This method should not be called if any of the following are already set for the EntityType: 
+              ReferenceModeFactType,
+              ReferenceModeValueType,
+              ReferenceModeRoleConstraint,
+              PreferredIdentifierRCId.
+ </remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.EntityType.CreateSubtypeRelationship(FactEngineForServices.FBM.ModelObject,System.Boolean,System.String,System.String,System.Boolean,FactEngineForServices.FBM.FactType)">
+ <summary>
+ Creates a SubtypeRelationship for the Model Element.
+ </summary>
+ <param name="arParentModelElement"></param>
+ <param name="abIsPrimarySubtypeRelationship"></param>
+ <param name="asSubtypeRoleId">Used when importing NORMA .orm files.</param>
+ <param name="asSupertypeRoleId">Used when importing NORMA .orm files.</param>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FBM.EntityType.getRDSPrimaryReferenceSchemeFromSupertypeIfNecessary">
+ <summary>
+ Pulls the RDS (Columns) Primary Reference Scheme from a Supertype of the ModelElement if the ModelElement is not absorbed.
+ </summary>
+</member>
+<member name="M:FactEngineForServices.FBM.EntityType.getDataType">
+ <summary>
+ Returns the DataType of the EntityType or its topmost Supertype if the EntityType is a Subtype of an EntityType with a ReferenceModeValueType.
+ PRECONDITIONS: EntityType has a Simple Reference Scheme
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.EntityType.getDataTypeLength">
+ <summary>
+ Returns the DataTypeLength of the EntityType or its topmost Supertype if the EntityType is a Subtype of an EntityType with a ReferenceModeValueType.
+ PRECONDITIONS: EntityType has a Simple Reference Scheme
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.EntityType.getDownstreamActiveRoles(System.Collections.Generic.List{FactEngineForServices.FBM.Role}@)">
+ <summary>
+ Only used for EntityTypes with a CompoundReferenceScheme
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.EntityType.GetCQLText">
+ <summary>
+ Returns the CQL for the EntityType
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.EntityType.GetSignature">
+ <summary>
+ Returns the unique Signature of the EntityType
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.EntityType.HasCompoundReferenceMode">
+ <summary>
+ Returns True if the EntityType has a Compound Reference Mode, else returns False
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.EntityType.IsSubtype">
+ <summary>
+ Returns True if the EntityType is a Subtype, else returns False.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.EntityType.RemoveDataInstance(System.String)">
+ <summary>
+ Removes a Data Instance from the Entity and all associated Sample Populations (within associated Fact Types).
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.EntityType.RemoveSimpleReferenceScheme(System.Boolean)">
+ <summary>
+ Removes the Simple Reference Scheme from the Entity Type.
+   NB Does not remove the ReferenceModeFactType from the Model. It is possible to remove the Simple Reference Scheme without
+   removing the associated FactType and ValueType. Other functions remove those if necessary.
+   See EntityTypeInstance._EntityType_ReferenceModeChanged (event Raised below).
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.EntityType.RemoveUnwantedDataInstances">
+ <summary>
+ Removes unused DataInstances from the EntityType
+ </summary>        
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.EntityType.Save(System.Boolean)">
+ <summary>
+ Saves the EntityType to the database
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.EntityType.SetReferenceMode(System.String,System.Boolean,System.String,System.Boolean,FactEngineForServices.publicFBMConstants.pcenumORMDataType,System.Boolean,System.Boolean)">
+ <summary>
+ Sets the Reference Mode for the Entity Type.
+ </summary>
+ <param name="asReferenceMode">The ReferenceMode for the EntityType</param>
+ <param name="abSimpleAssignment">True if just setting the ReferenceMode without creating references or changing anything, else False</param>
+ <param name="asValueTypeName">Provided if the name for the ValueType is known and need not be generated.</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.EntityType.SetCompoundReferenceSchemeRoleConstraint(FactEngineForServices.FBM.RoleConstraint@)">
+ <summary>
+ Sets the CompoundReferenceScheme.RoleConstraint for the EntityType.
+ NB Precondition: EntityType has no ReferenceMode (SimpleReferenceScheme), else throws exception.
+ </summary>
+ <param name="arRoleConstraint">The RoleConstraint that defines the CompoundReferenceScheme for the EntityType</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.EntityType.setName(System.String,System.Boolean)">
+ <summary>
+ Sets the Name, Symbol and Id of an EntityType.
+ </summary>
+ <param name="asNewName"></param>
+ <remarks>Preconditions: The uniqueness of the new EntityType.Name amoungst EntityTypes, ValueTypes, FactTypes and RoleConstraints has already been verified.</remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.EntityType.SetIsObjectifyingEntityType(System.Boolean)">
+ <summary>
+ Changes whether or not the EntityType is an Objectifying Entity Type.
+   NB Rare, if ever, this method will be used.
+ </summary>
+ <param name="abIsObjectifyingEntityType"></param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.EntityType.SetObjectifiedFactType(FactEngineForServices.FBM.FactType@)">
+ <summary>
+ Changed the FactType objectified by the EntityType
+   NB Rare, if ever, this method will be used.
+ </summary>
+ <param name="arNewObjectifiedFactType"></param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Fact.EnumerateDataAsKey(System.Collections.Generic.List{System.String})">
+ <summary>
+ Enumerates the Data of the Fact as a key value
+ </summary>
+ <returns>String representing a key of the data within the Fact</returns>
+ <remarks>Used in processing ORMQL statements. e.g. Where DISTINCT keyword is used in a SELECT statement</remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Fact.GetReading">
+ <summary>
+ Returns a Reading for the Fact.
+ e.g. "Person has a FirstName"
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Fact.RemoveFromModel(System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+ <summary>
+ If not DeleteAll, then the ConceptInstance/s for the Fact need to be removed from the database elsewhere.
+   The reason for this is that some ConceptInstances are Values for a Role, and may not belong to the Fact being deleted.
+ </summary>
+ <param name="abForceRemoval"></param>
+ <param name="abCheckForErrors"></param>
+ <param name="abDoDatabaseProcessing"></param>
+ <param name="abDeleteAll"></param>
+ <returns></returns>
+</member>
+<member name="F:FactEngineForServices.FBM.FactData.FactType">
+ <summary>
+ The FactType of the Fact to which the RoleData belongs.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.FactData._Fact">
+ <summary>
+ The Fact to which the RoleData belongs.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.FactData.Role">
+ <summary>
+ The Role to which the 'Concept' (Value) is related within the Fact.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:FactEngineForServices.FBM.FactData.Data">
+ <summary>
+ The Data stored for the Role for the Fact.
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactData.Clone(FactEngineForServices.FBM.Fact@,System.Boolean)">
+ <summary>
+ Returns a Clone of the FactData.
+ </summary>
+ <param name="arFact"></param>
+ <returns></returns>
+ <remarks>Needs to be managed carefully because does not clone the Role</remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactData.Clone(FactEngineForServices.FBM.Model@,FactEngineForServices.FBM.Fact@,FactEngineForServices.FBM.FactType@)">
+ <summary>
+ Clones the RoleData struct. 
+ PRECONDITIONS: The ModelDictionary for the Model must be prepopulated.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactData.setData(System.String,FactEngineForServices.publicConstants.pcenumConceptType,System.Boolean)">
+ <summary>
+ Sets the Concept.Symbol for the FactData.
+ Preconditions: The ModelDictionary is already loaded for the FactData.Model and the FactData.Concept is already linked to a DictionaryEntry in the ModelDitionary (link to DictionaryEntry.Concept).
+ Postconditions: The FactData.Concept is either updated to a new Symbol or switched to a new DictionaryEntry.Concept.
+ </summary>
+ <param name="value"></param>
+ <remarks>NB Initial setting of the FactData.Concept.Symbol should be done via the Set method of FactData.Data</remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.FactType._IsPreferredReferenceMode">
+ <summary>
+ Only used for Simple Reference Schemes. Allows the FactType to be hidden.
+ To find out if a FactType is for a ReferenceScheme use FactType.IsUsedInReferenceScheme
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.FactType.LinkFactTypeRole">
+ <summary>
+ If the FactType is a LinkFactType, then is the Role of the ObjectifiedFactType that this FactType belongs to.
+   LinkFactTypes belong to ObjectifiedFactTypes, and each LinkFactType of an ObjectifiedFactType corresponds to a Role of that ObjectifiedFactType.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.FactType._IsSubtypeStateControlling">
+ <summary>
+ True if the FactType is a relation between a Supertype and a ValueType such that values of the ValueType determine the state of Subtypes of the Supertype, else False.
+ E.g. if a Supertype, 'Person', has subtypes 'Child', 'Teenager', 'Adult', and an assciated ValueType 'AgeRange' (limited to 'Child', 'Teenager' and 'Adult'), then
+ if this FactType is the FactType linking the Supertype (EntityType) to the ValueType, this field is set to True, else False.
+ i.e. In 99.9999% of FactType cases this field will be false.
+ </summary>
+</member>
+<member name="F:FactEngineForServices.FBM.FactType.StoreFactCoordinates">
+ <summary>
+ NB Only used for MDA FactTypes in the CMML. True if coordinates are stored for Facts allocated to a Page. Normally FactData coordinates are stored only. FactData/Values are not always unique on a Page. Facts are always unique on a Page.
+ </summary>
+</member>
+<member name="F:FactEngineForServices.FBM.FactType.RoleGroup">
+ <summary>
+ The list of Roles within the FactType (forming a 'RoleGroup')    
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.FactType.ObjectifyingEntityType">
+ <summary>
+ The EntityType for the FactType if the FactType is objectified.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.FactType.DerivationType">
+ <summary>
+ Only set by the FactEngine FEQL Processor at query time, so that FBM objects are not coupled to the FactEngine.
+ </summary>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.EqualsByModelElements(FactEngineForServices.FBM.FactType)">
+ <summary>
+ Returns True if the FactType's set of Role referenced ModelElements matches the other FactType's set of Role reference ModelElements,
+   else return False.
+ </summary>
+ <param name="other"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.CloneFacts">
+ <summary>
+ Creates a cloned list of the Facts in the FactType
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.CompareFactTypeNames(FactEngineForServices.FBM.FactType,FactEngineForServices.FBM.FactType)">
+ <summary>
+ Used to 'Sort' Enumerated lists Of FBM.FactType
+ </summary>
+ <param name="ao_a"></param>
+ <param name="ao_b"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.ExistsFactTypeReadingByRoleSequence(FactEngineForServices.FBM.FactTypeReading)">
+ <summary>
+ RETURNS TRUE if a Fact Type Reading exists for the Fact Type, and where that Fact Type Reading has the same Roles
+   in the same sequence as the supplied Fact Type Reading;
+ ELSE RETURNS FALSE
+ </summary>
+ <param name="arFactTypeReading">The Fact Type Reading against which a match within the Fact Type will be searched for (by Role/Sequence).</param>
+ <returns>TRUE if a Fact Type Reading exists for the Fact Type, and where that Fact Type Reading has the same Roles
+   in the same sequence as the supplied Fact Type Reading;
+ ELSE RETURNS FALSE
+ </returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.GetTypedPredicateIdByRoleSequence(FactEngineForServices.FBM.FactTypeReading)">
+ <summary>
+ Returns the existing TypedPredicateId for the given Role sequence.
+ PRECONDITION: A FactTypeReading already exists for the Role sequence and as within the arFactTypeReading argument.
+ </summary>
+ <param name="arFactTypeReading"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.ExistsPredicatePart(FactEngineForServices.FBM.FactTypeReading,System.String)">
+ <summary>
+ Returns TRUE if a Predicate Part exists for a Fact Type Reading and for the specified Role.
+ </summary>
+ <param name="arFactTypeReading">The Fact Type Reading to be checked.</param>
+ <param name="asRoleId">The Id of the Role within the Fact Type Reading to be checked, to be checked.</param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.CreateRole(FactEngineForServices.FBM.ModelObject@,System.Boolean,System.Boolean)">
+ <summary>
+ Creates a Role an adds it to the FactType.
+ </summary>
+ <param name="aoJoinedObject">The ModelElement to which the new Role relates.</param>
+ <param name="abBroadcastInterfaceEvent">Client/Server: True if the method is required to broadcast the addition of the Role to the FactType.</param>        
+ <returns>FBM.Role</returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.ExistsAvailablePermutation(FactEngineForServices.FBM.FactTypeReading)">
+ <summary>
+ Returns TRUE if not all of the RoleGroup Role order permutations are used for a FactType with more than on Role referencing the same ModelObject,
+   else returns FALSE.
+ NB Only to be used for FactTypes where more than on Role references the same ModelObject.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.ChangeModel(FactEngineForServices.FBM.Model@,System.Boolean)">
+ <summary>
+ Changes the Model of the FactType to the target Model.
+ </summary>
+ <param name="arTargetModel">The Model to which the FactType will be associated on completion of this method.</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.CreateLinkFactTypes(System.Boolean)">
+ <summary>
+ Creates the LinkFactTypes for the FactType.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.JoinedFactTypes">
+ <summary>
+ Used for getting the FactTypes joined to an ObjectifiedFactType.
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.JoinedRoles">
+ <summary>
+ Returns a list of Roles that join the FactType and where this FactType is Objectified. Roles are not of a LinkFactType
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.GetAvailableFTRPermutation(FactEngineForServices.FBM.FactTypeReading@)">
+ <summary>
+ Finds and returns an available permutation for a FactType with more than one Role referencing the same ModelObject.
+ NB Only to be used for FactTypes with more than one Role referencing the same ModelObject.
+ </summary>
+ <param name="arInitialFactTypeReading">The initial FactTypeReading from which to find a similar FactTypeReading (similar in Role.JoinedORMObject sequence)</param>
+ <returns>returns an available permutation for a FactType with more than one Role referencing the same ModelObject.</returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.getCorrespondingRDSTable(FactEngineForServices.FBM.ModelObject,System.Boolean)">
+ <summary>
+ PRECONDITION: FactType must have a corresponding RDS Table. Used to save typing.
+ </summary>
+ <param name="arModelObject">Function can be called for other ModelElements.</param>
+ <param name="abSuppressErrorMessage"></param>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.GetCountRolesJoiningFactTypes">
+ <summary>
+ Returns a count of the Roles within the RoleGroup of the FactType, where those Roles join a FactType.
+ </summary>
+ <returns></returns>
+ <remarks>Example of use: Sorting FactTypes.</remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.getDesinationModelObjects">
+ <summary>
+ Returns the set of Destination Model Objects on LinkFactTypes associated with the FactType.
+   Used to add the FactType's corresponding Table to a Page when all the ModelObjects are on the Page.
+   Used predominantly for PGS Pages, when both joined nodes of a binaryFactType are on the Page, such that the corresponding Relation/Edge link 
+   can be added to the Page.
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.GetCQLText">
+ <summary>
+ Returns the CQL for the EntityType
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.GetPredicatePart(FactEngineForServices.FBM.FactTypeReading,System.Int32,System.String)">
+ <summary>
+ 
+ </summary>
+ <param name="arFactTypeReading"></param>
+ <param name="aiSequenceNr"></param>
+ <param name="asRoleId"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.getPreferredInternalUniquenessConstraint(System.Boolean)">
+ <summary>
+ Gets the PreferredInternalUniquenessConstraint for the FactType, if there is one.
+ </summary>
+ <param name="abIgnoreErrors">Needed sometimes, as in when in Client/Server DuplexClientServer model.</param>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.GetRoleById(System.String)">
+ <summary>
+ Returns the Role object within the RoleGroup of the FactType, given the RoleId of the Role.
+ </summary>
+ <param name="asRoleId"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.GetRoleByJoinedObjectTypeId(System.String,System.Int32)">
+ <summary>
+ RETURNS the first Role that joins a MOdelObject with a matching asJoinedObjectTypeId,
+ OR if a SequenceNr is provided, the nth Role that has a matching asJoinedObjectTypeId
+ ELSE RETURNS Nothing
+ </summary>
+ <param name="aiSequenceNr"></param>
+ <param name="asJoinedObjectTypeId"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.GetSignature">
+ <summary>
+ Returns the unique Signature of the FactType
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.HasMoreThanOneRoleReferencingTheSameModelObject">
+ <summary>
+ This function is used to determine of more than one Role of the FactType references the same ModelObject.
+ 
+ RETURNS TRUE if more than one Role of the FactType references the same ModelObject
+ ELSE RETURNS FALSE
+ </summary>
+ <returns>TRUE if more than one Role of the FactType references the same ModelObject
+ ELSE RETURNS FALSE</returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.HasPartialButMultiRoleConstraint">
+ <summary>
+ This Function is used to see if a RoleGroup has an internal uniqueness constraint 
+ spanning more than 1 role but not a total_RoleConstraint.
+ 
+ RETURNS TRUE if the FactType has a partial role constraint (but more than unary and less than total)
+ ELSE RETURNS FALSE
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.hasTransitiveRingConstraint">
+ <summary>
+ TRUE if the FactType is binary and has an associated Transitive Ring Constraint, else FALSE
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.IsDoubleMandatory1To1FactType">
+ <summary>
+ Returns TRUE if the FactType within wich RoleId is present is a 1 to 1 binary FactType
+ and has two mandatory roles else returns FALSE
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.isRDSTable">
+ <summary>
+ RETURNS TRUE if the FactType has a TotalInternalUniquenessConstraint or a PartialButMultiInternalUniquenessConstraint. Used in RDS Processing.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.IsManyTo1BinaryFactType">
+ <summary>
+ Returns True if 1:1 binary fact type
+ Else returns False
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.GetMandatoryRoleCount">
+ <summary>
+ Returns the Count of MandatoryRoles within the FactType.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.GetReferencedModelObjectCounts(System.Collections.Generic.Dictionary{System.String,System.Int32}@)">
+ <summary>
+ Gets the counts of (Role) referenced ModelObjects and returns those counts in the dictionary argument.
+ </summary>
+ <param name="arModelObjectCountDictionary"></param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.getOutgoingFactTypeReadingForTabe(FactEngineForServices.RDS.Table)">
+ <summary>
+ Returns an Outgoing FactTypeReading for this FactType for the given Table.
+ </summary>
+ <param name="arTable"></param>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.GetTableName">
+ <summary>
+ Returns the TableName that a FactType belongs to when converting an ORMDiagram to a RelationalModel
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.RemoveFromModel(System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+ <summary>
+ Removes the FactType from the Model if it is possible to do so.
+   i.e. If there are no RoleConstraints that are not InternalUniquenessConstraints attached to Roles of the FactType etc.
+ </summary>
+ <param name="abForceRemoval"></param>
+ <param name="abCheckForErrors"></param>
+ <param name="abDoDatabaseProcessing">In Client/Server mode, we might not require that database functions are performed, because another Client may have already done the processing.</param>
+ <param name="abIncludeSubtypeRelationshipFactTypes">Only used for Entity Types.</param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.Objectify(System.Boolean,System.Boolean,FactEngineForServices.FBM.EntityType,System.Boolean)">
+ <summary>
+ Objectifies the FactType
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.RemoveFactTypeReading(FactEngineForServices.FBM.FactTypeReading,System.Boolean)">
+ <summary>
+ Removes a FactTypeReading from the list of FactTypeReadings for the FactType.
+ </summary>
+ <param name="arFactTypeReading"></param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.RemoveObjectification(System.Boolean)">
+ <summary>
+ Removes the Objectification of the FactType
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.RemoveRole(FactEngineForServices.FBM.Role@,System.Boolean,System.Boolean)">
+ <summary>
+ Removes a Role from the RoleGroup of the FactType
+ </summary>
+ <param name="arRole"></param>
+ <param name="abRemoveFromDatabase"></param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.Save(System.Boolean)">
+ <summary>
+ Saves the FactType to the database
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.SetFactTypeReading(FactEngineForServices.FBM.FactTypeReading@,System.Boolean@)">
+ <summary>
+ Resets an already existing FactTypeReading
+ </summary>
+ <param name="arFactTypeReading"></param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactType.TransformFactTypeReadingToAvailablePermutation(FactEngineForServices.FBM.FactTypeReading@)">
+ <summary>
+ Transforms a given FactTypeReading to an available permutation of that FactTypeReading (Role sequence) for a
+   the FactType of that FactTypeReading and where that FactType has more than one Role referencing the same ModelObject.
+ NB Should be called when creating a new FactTypeReading and where the user supplied FactTypeReading (Role sequence) has
+   already been used within the FactType.
+ NB Should only be called for a FactTypeReading.FactType where that FactType has more than one Role referencing the same ModelObject.
+ </summary>
+ <param name="arFactTypeReading"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.FactTypeReading._RoleList">
+ <summary>
+ Used only in searching a set of FactTypeReadings for one that has a matching RoleList sequence.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.FactTypeReading.TypedPredicateId">
+ <summary>
+ The Id of the TypedPredicate to which the FactTypeReading belongs. A TypedPredicate is an ordered set of Roles of a FactType.
+ The order of the Roles is always the same as the FactTypeReading. There may be more than one FactTypeReading with the same TypedPredicateId
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.FactTypeReading.IsPreferred">
+ <summary>
+ True if the FactTypeReading is preferred for the FactType that it belongs to.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.FactTypeReading.IsPreferredForPredicate">
+ <summary>
+ If there is more than one FactTypeReading for a FactType with the same TypedPredicateId,
+ one of them may be 'Preferred'.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactTypeReading.EqualsPartiallyByPredicatePartText(FactEngineForServices.FBM.FactTypeReading,System.Boolean)">
+ <summary>
+ Used in FactEngine queries, to find FTRs for partial matches within a larger FT.Arity and FTR.
+ E.g. "Person visited (Country:'China')" within a larger ternary FT
+ "Person visited (Country:'China') within the last 10 months"
+ </summary>
+ <param name="other"></param>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FBM.FactTypeReading.EqualsPartiallyByRoleJoinedModelObjectSequence(FactEngineForServices.FBM.FactTypeReading)">
+ <summary>
+ For QueryEdges in FactEngine queries where the QueryEdge is part of a larger FactType.
+ E.g. Where the FactType is ternary, but the QueryEdge is binary and where all QueryEdges are binary.
+ </summary>
+ <param name="other"></param>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FBM.FactTypeReading.MatchesByFactTypesRoles(FactEngineForServices.FBM.FactTypeReading)">
+ <summary>
+ RETURNS True if the PredicatePart/Role sequence matches that of the FactType's RoleGroup.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactTypeReading.MatchesRoleConstraintRoleOrder(FactEngineForServices.FBM.RoleConstraint@)">
+ <summary>
+ Used to check (for Binary FactTypes) whether the FactTypeReading Role order matches that of the supplied RoleConstraint
+ PRECONDITIONS: The FactType for the reading must be a Binary FactType.
+ </summary>
+ <param name="arRoleConstraint"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactTypeReading.ChangeModel(FactEngineForServices.FBM.Model@)">
+ <summary>
+ Changes the Model of the FactTypeReading to the target Model.
+ </summary>
+ <param name="arTargetModel">The Model to which the FactTypeReading will be associated on completion of this method.</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactTypeReading.GetReadingTextThatOrSome(System.Collections.Generic.List{FactEngineForServices.FBM.Role},System.Collections.Generic.List{FactEngineForServices.FBM.ModelObject}@,System.Boolean)">
+ <summary>
+ Returns the ReadingText but with either 'that' or 'some' in front of the ObjectType names.
+ </summary>
+ <param name="aarRole">The set of Roles that determines whether 'that' or 'some' precedes the respective ObjectType's name.</param>
+ <param name="abDropFirstRole">If TRUE, then the first Role/ObjectType.Name is dropped and replaced by 'that'</param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactTypeReading.RemovePredicatePartForRole(FactEngineForServices.FBM.Role@)">
+ <summary>
+ Removes PredicatePart/s from FactTypeReading for an ObjectType joined to a Role/s of the FactType of the FactTypeReading.
+ When a user removes a Role from a FactType, there is no option but to remove all 
+ PredicateParts (in FactTypeReadings for the FactType) that contain the ObjectType
+ joined by the Role being removed.
+ </summary>
+ <param name="arRole">The Role for which the associated PredicatePart will be removed</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.FactTypeReading.Save(System.Boolean)">
+ <summary>
+ Saves the FactTypeReading to the database
+ </summary>
+ <param name="abRapidSave"></param>
+ <remarks></remarks>
+</member>
+<member name="T:FactEngineForServices.FBM.JoinPath">
+ <summary>
+ A JoinPath is ultimately a sequence of Roles that are transversed from one Role to another Role, or a set of greater than 
+   two Roles.
+   * Each RoleConstraintArgument must have a valid JoinPath between the Roles of the RoleConstraintRoles associated
+     with the RoleConstraintArgument.
+   * Even though a JoinPath may traverse multiple FactTypes, and ultimately the ObjectTypes joined by the Roles of the
+     those FactTypes, it is the set of Roles that are traversed, to get from one Role to another Role, that form the
+     JoinPath.RolePath.
+   * The FactTypePath attribute of this class represents the set of unique FactTypes (1 or more) that are traversed within
+     the JoinPath.
+   * The first and last Roles within the JoinPath are always Roles of the RoleConstraintRoles of the RoleConstraintArgument
+     of the JoinPath. Intermediate Roles are either Roles merely traversed within the JoinPath OR a Role of a
+     RoleConstraintRole of the RoleConstraintArgument where the RoleConstraintArgument has more than two RoleConstraintRoles.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.JoinPath.Argument">
+ <summary>
+ The RoleConstraintArgument for which the JoinPath is created.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.JoinPath.RolePath">
+ <summary>
+ The set of Roles traversed in order to form the JoinPath.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.JoinPath.FactTypePath">
+ <summary>
+ The set of unique FactTypes (1 or more) that are traversed within the JoinPath.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:FactEngineForServices.FBM.JoinPath.IsComplete">
+ <summary>
+ TRUE if the JoinPath has as many Roles as the Argument of the JoinPath,
+ ELSE FALSE
+ </summary>
+ <value></value>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.JoinPath.#ctor">
+ <summary>
+ Parameterless New.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.JoinPath.#ctor(FactEngineForServices.FBM.RoleConstraintArgument)">
+ <summary>
+ Constructor.
+ </summary>
+ <param name="arRoleConstraintArgument">The RoleConstraintArgument for which the JoinPath is constructed.</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.JoinPath.AppendJoinPath(FactEngineForServices.FBM.JoinPath)">
+ <summary>
+ Appends a JoinPath to the JoinPath.
+ </summary>
+ <param name="arJoinPath"></param>
+ <remarks>Used when stepping between the Roles of a RoleConstraintArgument.</remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.JoinPath.ConstructFactTypePath">
+ <summary>
+ Constructs the FactTypePath of the JoinPath, given the Roles of the RolePath of the JoinPath.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.JoinPathRole.Argument">
+ <summary>
+ The RoleConstraintArgument to which the JoinPathRole belongs.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.JoinPathRole.Role">
+ <summary>
+ The Role of the JoinPath (i.e. for this JoinPathRole).
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.JoinPathRole.SequenceNr">
+ <summary>
+ The SequenceNr of the Role within the set of Roles that form the JoinPath for the RoleConstraintArgument.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.JoinPathRole.#ctor">
+ <summary>
+ Parameterless New
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.ModelNote.#ctor">
+ <summary>
+ Parameterless constructor
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.ModelNote.GetSignature">
+ <summary>
+ Returns the unique Signature of the ModelNote
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.ModelNote.Save(System.Boolean)">
+ <summary>
+ Saves the ModelNote to the database
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:FactEngineForServices.FBM.ModelObject.PrimarySupertypeName">
+ <summary>
+ Used for TypeDB schema generation only at this stage. Defaults to 'entity' for an Entity Type or 'relation' for a Fact Type etc if no Supertype is found.
+ </summary>
+ <returns></returns>
+</member>
+<member name="F:FactEngineForServices.FBM.ModelObject.IsObjectifyingEntityType">
+ <summary>
+ Used only if the ModelElement is an EntityType. True if the EntityType is an ObjectifyingEntityType for an ObjectifiedFactType.
+ </summary>
+</member>
+<member name="F:FactEngineForServices.FBM.ModelObject.ObjectifiedFactType">
+ <summary>
+ Used only if the ModelElement is an EntityType. The ObjectifiedFactType for the EntityType/ModelElement if IsObjectifyingEntityType.
+ </summary>
+</member>
+<member name="F:FactEngineForServices.FBM.ModelObject.IsDatabaseReservedWord">
+ <summary>
+ FactEngine specific. Used to change names like 'Order' to '[Order]'. See Me.DatabaseName
+ </summary>
+</member>
+<member name="F:FactEngineForServices.FBM.ModelObject.DerivationType">
+ <summary>
+ Only set by the FactEngine FEQL Processor at query time, so that FBM objects are not coupled to the FactEngine.
+ </summary>
+</member>
+<member name="F:FactEngineForServices.FBM.ModelObject._parentModelObjectList">
+ <summary>
+ Only used for Entity Types, Fact Types....those ModelObject ConceptTypes that can be Subtypes | Supertypes.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.ModelObject.Instance">
+ <summary>
+ Instances of this EntityType as exist as FactData against Roles within FactTypes where those Roles join this EntityType.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.ModelObject.PreboundReadingText">
+ <summary>
+ Only used (at this stage) for generating CQL. Temporarily populated.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.ModelObject.PostboundReadingText">
+ <summary>
+ Only used (at this stage) for generating CQL Temporarily populated.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.ModelObject.#ctor">
+ <summary>
+ Parameterless Constructor.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.ModelObject.EqualsBySignature(FactEngineForServices.FBM.ModelObject)">
+ <summary>
+ Overridden by the ModelObject (e.g. ValueType) represented by the ModelObject.
+ </summary>
+ <param name="other"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.ModelObject.CreateSubtypeRelationship(FactEngineForServices.FBM.ModelObject,System.Boolean,System.String,System.String,System.Boolean,FactEngineForServices.FBM.FactType)">
+ <summary>
+ Creates a SubtypeRelationship for the Model Element.
+ </summary>
+ <param name="arParentModelElement"></param>
+ <param name="abIsPrimarySubtypeRelationship"></param>
+ <param name="asSubtypeRoleId">Used when importing NORMA .orm files.</param>
+ <param name="asSupertypeRoleId">Used when importing NORMA .orm files.</param>
+ <param name="abCreateFactType">False if called from DuplexServiceClient when a SubtypeRelationshipFactType has been received for adding to the Model.</param>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FBM.ModelObject.GetTopmostNonAbsorbedSupertype">
+ <summary>
+ Ultimately returns the topmost Supertype that is not Absorbed from within in the upper hierarchy,
+   ELSE returns the ModelObject itself.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.ModelObject.GetTopmostSupertype">
+ <summary>
+ If the EntityType is a Subtype, then returns the topmost Supertype in the hierarchy,
+   ELSE returns the EntityType itself.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.ModelObject.GetSignature">
+ <summary>
+ Returns the unique Signature of the ModelObject
+ </summary>
+ <returns></returns>
+ <remarks>Overrided in FBM.EntityType, FBM.Valuetype, FBM.FactType, FBM.RoleConstraint, FBM.ModelNote</remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.ModelObject.GetAdjoinedRoles(System.Boolean)">
+ <summary>
+ Used for ValueTypes, EntityTypes, Objectified FactTypes. Returns the set of Roles of FactTypes that reference the ModelObject.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.ModelObject.getBaseModelObject">
+ <summary>
+ Overridden at the Instance level to return the Model level ModelObject for the Instance.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.ModelObject.makeDirty">
+ <summary>
+ Used to make saving to the database much quicker. Only hit the database if it is required.
+   NB Initially only implemented on Fact/FactInstances/ConceptInstance, which take up the bulk of a CMML enabled model (i.e. e.g. post v4.0 release of Boston).
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.ModelObject.removeInstance(System.String)">
+ <summary>
+ Removes an Instance for the ModelElement. For EntityTypes, ValueTypes and FactTypes.
+ </summary>
+ <param name="asInstance"></param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.ModelObject.renameInstance(System.String,System.String)">
+ <summary>
+ Removes an Instance for the ModelElement. For EntityTypes, ValueTypes and FactTypes.
+ </summary>
+ <param name="asOriginalInstance">The original Instance being renamed/replaced.</param>
+ <param name="asNewInstance">The Instance value to replace the original Instance.</param>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.PredicatePart.PredicatePartText">
+ <summary>
+ The full text of the PredicatePart. i.e. Not 'split' into individual words/Symbols.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.PredicatePart.PredicatePart">
+ <summary>
+ Is a 'split' of the PredicatePartText. i.e. Is the individual words of the PredicatePartText.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.PredicatePart.Save(System.Boolean)">
+ <summary>
+ Saves the PredicatePart to the database
+ </summary>
+ <param name="abRapidSave"></param>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.Role._RoleConstraintRoleValueConstraint">
+ <summary>
+ If the Role has RoleValueConstraint the RoleConstraint that is that RoleValueConstraint.
+ </summary>
+</member>
+<member name="F:FactEngineForServices.FBM.Role.IsArray">
+ <summary>
+ FactEngine specific. As in when operating over a MongoDB database. 'Lecturer likes CarType' may have CarType as an array on Lecturer collection.
+   The ODBC driver for MongoDB expects not to join Lecturer and CarType, but rather link Lecturer to Lecturer_CarType (array virtual table in ODBC).
+   Also lets the user know that the collection is an array.
+ </summary>
+</member>
+<member name="M:FactEngineForServices.FBM.Role.ChangeModel(FactEngineForServices.FBM.Model@,System.Boolean)">
+ <summary>
+ Changes the Model of the Role to the target Model.
+ </summary>
+ <param name="arTargetModel">The Model to which the Role will be associated on completion of this method.</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Role.belongsToRelation">
+ <summary>
+ Used when adding a new Role to a FactType. If the Role is a RDSForeignKeyRole, then must add the related Column (for the new Role) to the Relation, and the Relation to the Column.
+ PRECONDITION: See FBM.Role.isRDSForeignKeyRole. Role must be the ResponsibleRole of a Column. Relation must have existing Columns (obviously).
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Role.GetCorrespondingUnaryOrBinaryFactTypeColumn(FactEngineForServices.RDS.Table@)">
+ <summary>
+ PRECONDITIONS: The Role represents only one Column, not many (as when a Role of an ObjectifiedFactType references another ObjectifiedFactType).
+ The Role is within a BinaryFactType or UnaryFactType, and the other Role (if Binary) does not join an ObjectifiedFactType.
+ </summary>
+ <param name="arTable"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Role.GetCorrespondingFactTypeColumn(FactEngineForServices.RDS.Table@,FactEngineForServices.FBM.Role@)">
+ <summary>
+ PRECONDITIONS: The Role represents only one Column, not many (as when a Role of an ObjectifiedFactType references another ObjectifiedFactType).
+ The Role is within a FactType/ObjectifiedFactType.
+ </summary>
+ <param name="arTable"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Role.getDownstreamRolePaths(FactEngineForServices.FBM.Role@,System.Collections.Generic.List{FactEngineForServices.FBM.Role}@)">
+ <summary>
+ Used in, for instance, Me.getResponsibleColumns() to make sure that upstream Columns for a ReassignedRole are actually for the reassigned Role.
+ </summary>
+ <param name="arTargetRole"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Role.getResponsibleColumns">
+ <summary>
+ Returns a list of the Columns that are ultimately responsible for an ActiveRole, or the ReferenceModeFactType.RoleGroup(0) of the JoinedORMObject (EntityType) of that Role.
+  Most likely will return just one table, but will return all Columns of all Tables that fit the bill.
+   See the TimetableBookings page of the University model.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Role.getResponsibleTables">
+ <summary>
+ Returns a list of the Tables that are ultimately responsible for an ActiveRole of a Column. Most likely will return just one table.
+   See the TimetableBookings page of the University model.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Role.getAttributeNames">
+ <summary>
+ Returns the list of Attribute Names for a Role that references a Fact Type (recursive).
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Role.getDownstreamRoleActiveRoles(System.Collections.Generic.List{FactEngineForServices.FBM.Role}@)">
+ <summary>
+ Used, for example, when reassigning a Role to another ModelObject.
+ PRECONDITION: Role is part of the RoleGroup of a FactType with a TotalInternalUniquenessConstraint or a PartialButMultiInternalUniquenessConstraint
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Role.getColumns(FactEngineForServices.RDS.Table@,FactEngineForServices.FBM.Role@)">
+ <summary>
+ Returns the list of Attribute Names for a Role that references a Fact Type (recursive).
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Role.HasInternalUniquenessConstraint">
+ <summary>
+ Returns True if the Role 'owns' an InternalUniquenessConstraint, else returns False            
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Role.IsERDSimpleReferenceSchemePKRole">
+ <summary>
+ Returns True if the Role represents a PK on the (ERD) Entity, and because the Role is part of the FactType that represents the SimpleReferenceScheme of the associated ModelObject (EntityType, FactType).
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Role.IsERDPKRoleOfObjectifiedFactType">
+ <summary>
+ Returns True if the Role is part of the PK of an ObjectifiedFactType.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Role.isForFactTypeOfCompoundReferenceScheme">
+ <summary>
+ True if the Role belongs to a FactType that has a Role that is part of a CompoundReferenceScheme for an EntityType
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Role.hasResponsibleColumns">
+ <summary>
+ TRUE if the Role is an Active Role (or should be) of a Column, where the Column's ResponsibleRole is in a different FactType that references (eventually) the FactType of this Role.
+   See the TimetableBookings table of the University model.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Role.isRDSForeignKeyRole">
+ <summary>
+ PRECONDITION: Only use on Roles that are the ResponsibleRole for a Column.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Role.ReassignJoinedModelObject(FactEngineForServices.FBM.ModelObject@,System.Boolean,FactEngineForServices.FBM.ConceptInstance)">
+ <summary>
+ Reassigns the joined ModelObject of the Role.
+ NB The name of the FactType of the Role must be modified to reflect the new relation.
+ </summary>
+ <param name="arNewJoinedModelObject"></param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Role.RemoveFromModel(System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+ <summary>
+ Removes the Role from the Model if it is okay to do so.
+   i.e. Will not remove the Role if there is a RoleConstraint attached to the Role.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.Role.setName(System.String,System.Boolean)">
+ <summary>
+ Sets the Name of the Role
+ </summary>
+ <param name="asName"></param>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.RoleConstraint.CardinalityRangeType">
+ <summary>
+ Only used on FrequencyConstraints.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.RoleConstraint.ValueRangeType">
+ <summary>
+ Used in ValueComparisonConstraints
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.RoleConstraint.Cardinality">
+ <summary>
+ Only used on FrequencyConstraints.
+ Set in relation to the values of MinimumFrequencyCount and MaximumFrequencyCount and CardinalityRangeType
+ Case CardinalityRangeType 
+     Case Is = pcenumCardinalityRangeType.LessThanOREqual
+        Me.Cardinality = MaximumFrequencyCount   
+     Case Is = pcenumCardinalityRangeType.Equal
+        Me.Cardinality = (Either) MaximumFrequencyCount or MinimumFrequencyCount...because they will be the same
+     Case Is = pcenumCardinalityRangeType.GreaterThanOREqual
+        Me.Cardinality = MinimumFrequencyCount
+     Case Is = pcenumCardinalityRangeType.Between
+        Me.Cardinality = 0
+ End Case
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.RoleConstraint._MinimumFrequencyCount">
+ <summary>
+ Only used on 'FrequencyConstraints'.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.RoleConstraint._MaximumFrequencyCount">
+ <summary>
+ Only used on 'FrequencyConstraints'.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.RoleConstraint._MinimumValue">
+ <summary>
+ Used on 'ValueConstraints'.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.RoleConstraint._MaximumValue">
+ <summary>
+ Used on 'ValueConstraints'.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.RoleConstraint.Argument">
+ <summary>
+ List of Arguments for the RoleConstraint, if the RoleConstraint is of a type that has Arguments.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.RoleConstraint.CurrentArgument">
+ <summary>
+ Only used when creating a new Argument dynamically. Once the Argument is created, can be added to Me.Argument.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.RoleConstraint.#ctor(FactEngineForServices.FBM.Model@,FactEngineForServices.publicConstants.pcenumRoleConstraintType,System.Collections.Generic.List{FactEngineForServices.FBM.Role}@,System.Boolean,System.Int32,System.Boolean)">
+ <summary>
+ PRECONDITIONS: If aarRole is populated, all Roles in aarRole have the same FactType.
+ </summary>
+ <param name="arModel"></param>
+ <param name="aiRoleConstraintType"></param>
+ <param name="aarRole"></param>
+ <param name="abAddToModel"></param>
+ <param name="aiLevelNr"></param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.RoleConstraint.#ctor(FactEngineForServices.FBM.Model,FactEngineForServices.publicConstants.pcenumRoleConstraintType,System.Collections.Generic.List{FactEngineForServices.FBM.Role}@,System.Int32,FactEngineForServices.publicConstants.pcenumCardinalityRangeType,System.Boolean,System.Boolean)">
+ <summary>
+ Constructor used for a FrequencyConstraint type RoleConstraint.
+ </summary>
+ <param name="arModel"></param>
+ <param name="aiRoleConstraintType"></param>
+ <param name="aarRole"></param>
+ <param name="aiCardinality"></param>
+ <param name="aiCardinalityRangeType"></param>
+ <param name="abAddToModel"></param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.RoleConstraint.CompareRoleConstraintNames(FactEngineForServices.FBM.RoleConstraint,FactEngineForServices.FBM.RoleConstraint)">
+ <summary>
+ Used to 'Sort' Enumerated lists of tRoleConstraint
+ </summary>
+ <param name="ao_a"></param>
+ <param name="ao_b"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.RoleConstraint.DoesEachRoleFactTypeOppositeRoleJoinSameModelObject">
+ <summary>
+ Returns True if each Role/FactType (from RoleConstraintRole) is binary, and each opposite Role in that binary FactType joins the same ModelObject, for all RoleConstraintRoles for this RoleConstraint;
+ else returns False.
+ </summary>
+ <returns>True if each Role/FactType (from RoleConstraintRole) is binary, and each opposite Role in that binary FactType joins the same ModelObject, for all RoleConstraintRoles for this RoleConstraint;
+ else returns False.</returns>
+ <remarks>A Role/FactType is the FactType of the Role of a RoleConstraintRole</remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.RoleConstraint.impliesSingleColumnForRDSTable">
+ <summary>
+ RETURNS TRUE if the RoleConstraint implies a single Column for a RDS Table, else RETURNS FALSE
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.RoleConstraint.GetCQLText">
+ <summary>
+ Returns the CQL for the EntityType
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.RoleConstraint.GetNextArgumentSequenceNr">
+ <summary>
+ Returns the count of Arguments already created for the RoleConstraint plus one.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.RoleConstraint.GetSignature">
+ <summary>
+ Returns the unique Signature of the RoleConstraint
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.RoleConstraint.ExistingArgumentsContainsMemberOfRoleList(System.Collections.Generic.List{FactEngineForServices.FBM.Role})">
+ <summary>
+ Used for checking that a new JoinPath doesn't cover a Role in a Path of an existing Argument.JoinPath
+ </summary>
+ <param name="aarRoleList"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.RoleConstraint.ChangeModel(FactEngineForServices.FBM.Model@,System.Boolean)">
+ <summary>
+ Changes the Model of the RoleConstraint to the target Model.
+ </summary>
+ <param name="arTargetModel">The Model to which the RoleConstraint will be associated on completion of this method.</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.RoleConstraint.RemoveArgumentBySequenceNr(System.Int32)">
+ <summary>
+ Removes a RoleConstraintArgument from the RoleConstraint based on the provided SequenceNr
+ </summary>
+ <param name="aiSequenceNr">The SequenceNr of the Argument to be removed.</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.RoleConstraint.RemoveFromModel(System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+ <summary>
+ Removes the RoleConstraint from the Model.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.RoleConstraint.SetIsPreferredIdentifier(System.Boolean,System.Boolean,FactEngineForServices.FBM.RoleConstraint@)">
+ <summary>
+ 
+ </summary>
+ <param name="abIsPreferredIdentifier"></param>
+ <param name="abDoRDSProcessing">When creating the first Uniqueness Constraint for a Ternary/greater Fact Type, we want to set the RC.IsPreferredIndentifier to True, 
+ but not create the Index, because that is done further in Model.AddRoleConstraint, so abort at RDS processing here.</param>
+</member>
+<member name="M:FactEngineForServices.FBM.RoleConstraintArgument.#ctor">
+ <summary>
+ Parameterless New
+ </summary>
+</member>
+<member name="M:FactEngineForServices.FBM.RoleConstraintArgument.Clone(FactEngineForServices.FBM.Model@,FactEngineForServices.FBM.RoleConstraint@)">
+ <summary>
+ 
+ </summary>
+ <param name="arModel"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.RoleConstraintArgument.AllRolesAreForTheSameFactType">
+ <summary>
+ RETURNS TRUE if all the Roles of the RoleConstraintRoles of the RoleConstraintArgument are of the same FactType, 
+ ELSE RETURNS FALSE
+ </summary>
+ <returns>RETURNS TRUE if all the Roles of the RoleConstraintRoles of the RoleConstraintArgument are of the same FactType, 
+ ELSE RETURNS FALSE</returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.RoleConstraintArgument.ConstructJoinPathForAssociatedRoleConstraintRoles">
+ <summary>
+ Constructs the JoinPath for the RoleConstraintArgument based on the RoleConstraintRoles of the RoleConstraintArgument.
+ </summary>
+ <remarks>
+ PRECONDITIONS:
+ 1. A join path exists for the Roles of the RoleConstraintRoles of the RoleConstraintArgumen.
+     See Me.ExistsJoinPathForRoleConstraintRoles
+     NB It isn't necessary to check this first, but (of course) if there is no JoinPath then this process will fail.
+ POSTCONDITIONS:
+ 1. The JoinPath object for this RoleConstraintArgument is populated.</remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.RoleConstraintArgument.ExistsJoinPathForRoleConstraintRoles(FactEngineForServices.publicConstantsFBM.pcenumJoinPathError@)">
+ <summary>
+ Returns TRUE if there is a JoinPath for all of the Roles associated with the RoleConstraintArgument, else returns FALSE.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.RoleConstraintArgument.ProjectArgumentReading">
+ <summary>
+ Projects a Reading of the combined FactTypeReadings for the FactTypes of the JoinPath of the Argument.
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.RoleConstraintRole.RoleConstraintArgument">
+ <summary>
+ Populated if the RoleConstraintRole belongs to a RoleConsrtaint with a set of Arguments
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.RoleConstraintRole.ArgumentSequenceNr">
+ <summary>
+ Poplated if the RoleConstraintRole belongs to a RoleConstraint with a set of Arguments. Is the Sequential poition of the RoleConstaintRole within the Argument to which it belongs. See RoleConstraintRole.RoleConstraintArgument.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.FBM.tSubtypeRelationship.FactType">
+ <summary>
+ The corresponding FactType that represents this SubtypeConstraint.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.tSubtypeRelationship.Clone(FactEngineForServices.FBM.Model@,System.Boolean)">
+ <summary>
+ 
+ </summary>
+ <param name="arModel">The target Model that the SubtypeRelationship is being cloned to.</param>
+ <param name="abAddToModel">TRUE if all relevant attributes are also cloned to arModel, else FALSE</param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.tSubtypeRelationship.CloneInstance(FactEngineForServices.FBM.Page@,System.Boolean)">
+ <summary>
+ Clones the SubtypeRelationship into a SubtypeRelationhip instance.
+ </summary>
+ <param name="arPage">The Page onto which the SubtypeRelatioship is to be cloned.</param>
+ <param name="abAddToPage">Not used for SubtypeRelationship</param>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FBM.ValueType.CompareValueTypeNames(FactEngineForServices.FBM.ValueType,FactEngineForServices.FBM.ValueType)">
+ <summary>
+ Used to 'Sort' Enumerated lists of tValueType
+ </summary>
+ <param name="ao_a"></param>
+ <param name="ao_b"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.ValueType.ChangeModel(FactEngineForServices.FBM.Model@)">
+ <summary>
+ Changes the Model of the ValueType to the target Model.
+ </summary>
+ <param name="arTargetModel">The Model to which the ValueType will be associated on completion of this method.</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.ValueType.ExistsRolesAssociatedWithValueType">
+ <summary>
+ Returns TRUE if there are any Roles (within FactTypes) that are associated with the ValueType, else returns FALSE
+ </summary>
+ <returns>TRUE if there are any Roles (within FactTypes) that are associated with the ValueType, else returns FALSE</returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.ValueType.IsRoleIndependent">
+ <summary>
+ Returns True if there are no Roles that reference the ValueType, else returns False
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.ValueType.IsReferenceMode">
+ <summary>
+ Returns TRUE if is the ReferenceMode of an EntityType, else returns FALSE
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.ValueType.GetCQLText">
+ <summary>
+ Returns the CQL for the ValueType
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.ValueType.GetReferenceModeFromName">
+ <summary>
+ Formulates a ReferenceMode (for an EntityType) from the Name of the ValueType.
+   e.g. "Id" from "Person_Id".
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FBM.ValueType.GetSignature">
+ <summary>
+ Returns the unique Signature of the ValueType
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.PGS.Link.setHeadShapes">
+ <summary>
+ Puts the arrows on the Link depending on various scenarios.
+ </summary>
+</member>
+<member name="F:FactEngineForServices.PGS.Node.PGSRelation">
+ <summary>
+ A PGSRelation always has a corresponding Node, because but for the relations attached to the underlying FactType the PGSRelation is either a Link or a Node.
+ For example, an ObjectifiedFactType that has no associated FactTypes is a PGSRelation, but the moment a binary FactType linking the ObjectifiedFactType to an EntityType is created
+ then the PGSRelation must be presented as a Node on the PGS Page.
+ </summary>
+</member>
+<member name="M:FactEngineForServices.PGS.Relation.UpdatePredicatePartsFromRelationFactTypeFactTypeReading(FactEngineForServices.FBM.FactTypeReading@)">
+ <summary>
+ VM-20160524-Needs to be written (only just started) for the 1.13 database model.
+ Updates the OriginPredicatePart and the DestinationPreicatePart of a Relation based on the FactTypeReading.
+ FactType must be binary.
+ </summary>
+ <param name="arFactTypeReading"></param>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.RDS.Column.DatabaseName">
+ <summary>
+ Used in reverse engineering.
+ </summary>
+</member>
+<member name="F:FactEngineForServices.RDS.Column.AsName">
+ <summary>
+ As when "SELECT Horse.Id AS Horse_Id"
+ </summary>
+</member>
+<member name="F:FactEngineForServices.RDS.Column._SupertypeColumn">
+ <summary>
+ Is the Column from the Supertype Table that is represented by this Column, if this Column is inherited from a Supertype table.
+ </summary>
+</member>
+<member name="F:FactEngineForServices.RDS.Column.FactType">
+ <summary>
+ The FactType (usually Binary) that is responsible for this Column within the Model from which this 
+   Column is derived.
+ </summary>
+ <remarks></remarks>        
+</member>
+<member name="F:FactEngineForServices.RDS.Column._Role">
+ <summary>
+ The Role that was responsible for the derivation of the Column.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.RDS.Column._ActiveRole">
+ <summary>
+ The ultimate Role that resulted in the Column. Where ObjectifiedFactTypes are refererced by other Roles, the first Role is the responsible Role...the nested/absorbed Role is the ActiveRole
+   e.g. See the TimetableBookings Page of the University Model.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="P:FactEngineForServices.RDS.Column.DBCreateString">
+ <summary>
+ Not currently used. Designed to return the string to create the Column in the database.
+ </summary>
+ <returns></returns>
+</member>
+<member name="F:FactEngineForServices.RDS.Column.TemporaryAlias">
+ <summary>
+ Used when creating SQL etc for FactEngine. When the set of Projection Columns is returned, this Alias is set so that ProjectionColumns refer to the correct Table in the From clause etc.
+ </summary>
+</member>
+<member name="F:FactEngineForServices.RDS.Column.GraphNodeType">
+ <summary>
+ FactEngine specific. Used to tell the type of Node for each result in the Query.
+ </summary>
+</member>
+<member name="M:FactEngineForServices.RDS.Column.#ctor">
+ <summary>
+ Parameterless New
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.RDS.Column.Clone(FactEngineForServices.RDS.Table@,FactEngineForServices.RDS.Relation@,System.Boolean,System.Boolean,FactEngineForServices.FEQL.tFEQLConstants.pcenumFEQLNodeModifierFunction)">
+ <summary>
+ 
+ </summary>
+ <param name="arOriginTable">Must be populated if arRelation is populated. Specify if you want the cloned Column to be of that Table.</param>
+ <param name="arRelation">Populate if cloning for a Relation</param>
+ <param name="aiNodeModifierFunction">FactEngine specific. Used for modifying the Column in SELECT/RETURN clauses. E.g. Date(DateTime)</param>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.RDS.Column.isForeignKey">
+ <summary>
+ The Column is part of a Relation mapping the Column's Table to another Table, and may be one of many Columns in the associated Relation.
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.RDS.Column.isPartOfPrimaryKey(System.Boolean)">
+ <summary>
+ Used to check if the Column is part of the PK Index for the Table. Especially when adding a new Unique Index to a Table,
+   such that the ERD.Attribute.PartOfPrimaryKey is not set to False.
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.RDS.Column.isSimpleAttribute">
+ <summary>
+ Simple Attributes are the result of a Binary Many-to-One FactType
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.RDS.Column.setTable(FactEngineForServices.RDS.Table@,System.Boolean)">
+ <summary>
+ Sets the Table for a Column. Used particularly when changing 'IsAbsorbed' for a ModelObject.
+ </summary>
+ <param name="arTable"></param>
+ <param name="abModifyCMML">Don't want to modify CMML that is to be removed as part of Absorption.</param>
+</member>
+<member name="M:FactEngineForServices.RDS.DataType.#ctor">
+ <summary>
+ Parameterless New.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.RDS.Index._ResponsibleRoleConstraint">
+ <summary>
+ 20200720-VM-In future will need to modify the Core Model to incorporate this, is derived as of today until new Core is created.
+ </summary>
+</member>
+<member name="M:FactEngineForServices.RDS.Index.#ctor">
+ <summary>
+ Parameterless New
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.RDS.Model.#ctor">
+ <summary>
+ Parameterless New for serialisation.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.RDS.Model.getRelationByResponsibleFactType(FactEngineForServices.FBM.FactType)">
+ <summary>
+ Gets a Relation by its ResponsibleFactType. NB Returns an error if there is no Relation or more than one Relation is returned.
+ </summary>
+ <param name="arFactType"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.RDS.Model.orderTablesByRelations(System.Boolean)">
+ <summary>
+ Puts the tables in Relationship Order.
+ </summary>
+</member>
+<member name="M:FactEngineForServices.RDS.Relation.#ctor">
+ <summary>
+ Parameterless New for serialisation.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.RDS.Relation.establishReverseColumns">
+ <summary>
+ Used for 1:1 Binary Relations. Establishes the Reverse Origin and Destination Columns, based on the PrimaryKey of the OriginTable.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.RDS.Relation.isPrimaryKeyBasedRelation">
+ <summary>
+ TRUE if the Relation is for a Column/Columns that are part of the PrimaryKey of the OriginTable.
+ </summary>
+ <returns></returns>
+</member>
+<member name="F:FactEngineForServices.RDS.Table.IsDBRelation">
+ <summary>
+ Used in reverse engineering. TypeDB Specific at this stage. True if the Table is the result of a Relation in the database.
+ </summary>
+</member>
+<member name="F:FactEngineForServices.RDS.Table._PrimarySupertype">
+ <summary>
+ Used only in reverse engineering at this stage. TypeDB specific at this stage.
+ </summary>
+</member>
+<member name="P:FactEngineForServices.RDS.Table.PrimarySupertype">
+ <summary>
+ Used primarily in reverse engineering. TypeDB specific at this stage. The primary supertype of the Table/Entity/Node
+ </summary>
+ <returns></returns>
+</member>
+<member name="F:FactEngineForServices.RDS.Table.RolesPlayed">
+ <summary>
+ TypeDB specific. The Roles 'played' by the Table.
+ </summary>
+</member>
+<member name="F:FactEngineForServices.RDS.Table.RelatedRoleNames">
+ <summary>
+ TypeDB specific. The Roles 'related' by the Table.
+   I.e. e.g. If the Table is a 'relation' in TypeDB...then the set of RoleNames that the Table/Relation relates.
+   i.e. e.g. As in an ObjectifiedFactType, is the set of RoleNames related by the Table.
+ </summary>
+</member>
+<member name="F:FactEngineForServices.RDS.Table.DerivationRule">
+ <summary>
+ TypeDB Specific. Is populated if Table is both a TypeDB Relation and has a Rule.
+ </summary>
+</member>
+<member name="P:FactEngineForServices.RDS.Table.DBVariableName">
+ <summary>
+ Creates a variable name for the Table, as in when needed for TypeQL queries for TypeDB.
+   NB An Alias is added as part of FEQL processing.
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.RDS.Table.#ctor">
+ <summary>
+ Parameterless New
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.RDS.Table.Clone">
+ <summary>
+ Clones the table. Limited functionality at this stage. [VM-20210313]
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.RDS.Table.addColumn(FactEngineForServices.RDS.Column@,System.Boolean)">
+ <summary>
+ Adds the specified Column to the Table.
+ </summary>
+ <param name="arColumn"></param>
+ <param name="abAddToDatabase">True if the column is to be added to the connected database.</param>
+</member>
+<member name="M:FactEngineForServices.RDS.Table.hasHigherReferencedTable">
+ <summary>
+ Used in sorting of Tables by Tables referenced by other Tables, as in when for creating output SQL in the propper Table order
+   such that Foreign Key reference constraints are created in the correct order.
+ NB Relies on the ListPos property of the Table being correct.
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.RDS.Table.getFirstUniquenessConstraintColumns">
+ <summary>
+ Returns the first Uniqueness Constraint Columns, even if the Index is the PrimaryKey
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.RDS.Table.getSubtypeTables">
+ <summary>
+ Non recursive, single layer return of subtype Tables.
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.RDS.Table.hasSingleColumnPrimaryKey">
+ <summary>
+ Returns TRUE if the Table has a PrimaryKey with one Column, 
+ ELSE returns FALSE
+ </summary>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.RDS.Table.createUniqueColumnName(System.String,FactEngineForServices.RDS.Column,System.Int32)">
+ <summary>
+ 
+ </summary>
+ <param name="asColumnName">The trial column name</param>''' 
+ <param name="arColumn">Use 'Nothing' if adding new column, rather than renaming column.</param>
+ <param name="aiStartingInd">Start with 0. Recusion adds 1 each iteration. 0 is not added to the asColumnName</param>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.RDS.Table.isCircularToTable(FactEngineForServices.RDS.Table)">
+ <summary>
+ TRUE if is a table like 'LecturerLikesLecturer' joining on Lecturer table twice.
+ </summary>
+ <param name="arTable"></param>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.RDS.Table.makeExistingPrimaryKeySimplyUnique(System.Collections.Generic.List{FactEngineForServices.RDS.Column}@)">
+ <summary>
+ Used when the User changes a Unique Index (that is not the existing Primary Key) to the Primary Key. Therefore, the existing Primary Key becomes simple a Unique Index (not Primary Key)
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.RDS.Table.removeColumn(FactEngineForServices.RDS.Column@,System.Boolean)">
+ <summary>
+ Removes a Column from the table.
+ </summary>
+ <param name="arColumn">The actual Column object to be removed from the Table.</param>
+ <remarks></remarks>
+</member>
+<member name="T:FactEngineForServices.RDS.Plays">
+ <summary>
+ TypeDB Specific and used when reverse engineering a database.
+ </summary>
+</member>
+<member name="M:FactEngineForServices.RDS.Plays.#ctor">
+ <summary>
+ Parameterless Constructor
+ </summary>
+</member>
+<member name="T:FactEngineForServices.Validation.ErrorChecker">
+ <summary>
+ Inherited Only
+ Base class for ErrorChecker classes.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.Validation.ErrorChecker.Model">
+ <summary>
+ The Model being checked.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.Validation.ModelValidator.Model">
+ <summary>
+ The Model being validated
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.Validation.ModelValidator.ErrorChecker">
+ <summary>
+ List of ErrorCheker inherited classes/objects.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.Validation.ModelValidator.AddErrorChecker(FactEngineForServices.Validation.ErrorChecker@)">
+ <summary>
+ Adds an ErrorChecker object to the list of ErrorChecker objects.
+ </summary>
+ <param name="arErrorChecker"></param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.Validation.ModelValidator.AddErrorCheckers">
+ <summary>
+ Creates the initial list of ErrorChecker objects
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FTR.Processor.GetParseTreeTokens(System.Object@,FactEngineForServices.FTR.ParseNode@)">
+ <summary>        
+ORMQL Mode. Gets the tokens from the Parse Tree.
+Walks the ParseTree and finds the tokens as per the Properties/Fields of the ao_object passed to the procedure.
+  i.e. Based on the type of token at the Root of the ParseTree, the software dynamically creates ao_object such that 
+  it contains the tokens that it wants returned.
+ </summary>
+ <param name="ao_object">is of runtime generated type DynamicCollection.Entity</param>
+ <param name="aoParseTreeNode">ParseNode as from VAQL Parser</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.FTR.ParseTree.Eval(System.Object[])">
+ <summary>
+ this is the entry point for executing and evaluating the parse tree.
+ </summary>
+ <param name="paramlist">additional optional input parameters</param>
+ <returns>the output of the evaluation function</returns>
+</member>
+<member name="M:FactEngineForServices.FTR.ParseNode.Eval(FactEngineForServices.FTR.ParseTree,System.Object[])">
+ <summary>
+ this implements the evaluation functionality, cannot be used directly
+ </summary>
+ <param name="tree">the parsetree itself</param>
+ <param name="paramlist">optional input parameters</param>
+ <returns>a partial result of the evaluation</returns>
+</member>
+<member name="M:FactEngineForServices.FTR.Scanner.Scan(FactEngineForServices.FTR.TokenType[])">
+ <summary>
+ executes a lookahead of the next token
+ and will advance the scan on the input string
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FTR.Scanner.LookAhead(FactEngineForServices.FTR.TokenType[])">
+ <summary>
+ returns token with longest best match
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:FactEngineForServices.FTR.TextHighlighter">
+ <summary>
+ Takes control over the RichTextBox and will color the text accoording to the rules of the parser and the scanner
+ this control extender will also support Undo/Redo functionality.
+ </summary>
+</member>
+<member name="M:FactEngineForServices.FTR.TextHighlighter.UndoItem.#ctor(System.String,System.Int32,System.Drawing.Point)">
+ <summary>
+ contains the information for an undo/redo action
+ </summary>
+ <param name="text">the full text to be undone/redone</param>
+ <param name="position">position of the caret after the un/redo action</param>
+ <param name="scroll">position of the scrollbars after un/redo action</param>
+</member>
+<member name="M:FactEngineForServices.FTR.TextHighlighter.GetCurrentContext">
+ <summary>
+ this handy function returns the section in which the user is editing currently
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.FTR.TextHighlighter.HighlightText">
+ <summary>
+ use HighlighText to start the text highlight process from the caller's thread.
+ this method is not used internally. 
+ </summary>
+</member>
+<member name="M:FactEngineForServices.FTR.TextHighlighter.HighlighTextCore">
+ <summary>
+ this method should be used only by HighlightText or RestoreState methods
+ </summary>
+</member>
+<member name="M:FactEngineForServices.FTR.TextHighlighter.Unicode(System.Text.StringBuilder)">
+ <summary>
+ added function to convert unicode characters in the stringbuilder to rtf unicode escapes
+ </summary>
+</member>
+<member name="M:FactEngineForServices.FTR.TextHighlighter.HightlightNode(FactEngineForServices.FTR.ParseNode,System.Text.StringBuilder)">
+ <summary>
+ inserts the RTF codes to highlight text blocks
+ </summary>
+ <param name="node">the node to highlight, will be appended to sb</param>
+ <param name="sb">the final output string</param>
+</member>
+<member name="M:FactEngineForServices.FTR.TextHighlighter.HighlightToken(FactEngineForServices.FTR.Token,System.Text.StringBuilder)">
+ <summary>
+ inserts the RTF codes to highlight text blocks
+ </summary>
+ <param name="token">the token to highlight, will be appended to sb</param>
+ <param name="sb">the final output string</param>
+</member>
+<member name="M:FactEngineForServices.tReferenceFieldValue.#ctor">
+ <summary>
+ Parameterless Constructor
+ </summary>
+</member>
+<member name="M:FactEngineForServices.ReferenceTable.#ctor">
+ <summary>
+ Parameterless Constructor
+ </summary>
+</member>
+<member name="M:FactEngineForServices.ReferenceTuple.#ctor">
+ <summary>
+ Parameterless Constructor
+ </summary>
+</member>
+<member name="M:FactEngineForServices.KeyValuePair.#ctor">
+ <summary>
+ Parameterless Constructor
+ </summary>
+</member>
+<member name="M:FactEngineForServices.VAQL.ParseTree.Eval(System.Object[])">
+ <summary>
+ this is the entry point for executing and evaluating the parse tree.
+ </summary>
+ <param name="paramlist">additional optional input parameters</param>
+ <returns>the output of the evaluation function</returns>
+</member>
+<member name="M:FactEngineForServices.VAQL.ParseNode.Eval(FactEngineForServices.VAQL.ParseTree,System.Object[])">
+ <summary>
+ this implements the evaluation functionality, cannot be used directly
+ </summary>
+ <param name="tree">the parsetree itself</param>
+ <param name="paramlist">optional input parameters</param>
+ <returns>a partial result of the evaluation</returns>
+</member>
+<member name="M:FactEngineForServices.VAQL.Scanner.Scan(FactEngineForServices.VAQL.TokenType[])">
+ <summary>
+ executes a lookahead of the next token
+ and will advance the scan on the input string
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.VAQL.Scanner.LookAhead(FactEngineForServices.VAQL.TokenType[])">
+ <summary>
+ returns token with longest best match
+ </summary>
+ <returns></returns>
+</member>
+<member name="T:FactEngineForServices.VAQL.TextHighlighter">
+ <summary>
+ Takes control over the RichTextBox and will color the text accoording to the rules of the parser and the scanner
+ this control extender will also support Undo/Redo functionality.
+ </summary>
+</member>
+<member name="M:FactEngineForServices.VAQL.TextHighlighter.UndoItem.#ctor(System.String,System.Int32,System.Drawing.Point)">
+ <summary>
+ contains the information for an undo/redo action
+ </summary>
+ <param name="text">the full text to be undone/redone</param>
+ <param name="position">position of the caret after the un/redo action</param>
+ <param name="scroll">position of the scrollbars after un/redo action</param>
+</member>
+<member name="M:FactEngineForServices.VAQL.TextHighlighter.GetCurrentContext">
+ <summary>
+ this handy function returns the section in which the user is editing currently
+ </summary>
+ <returns></returns>
+</member>
+<member name="M:FactEngineForServices.VAQL.TextHighlighter.HighlightText">
+ <summary>
+ use HighlighText to start the text highlight process from the caller's thread.
+ this method is not used internally. 
+ </summary>
+</member>
+<member name="M:FactEngineForServices.VAQL.TextHighlighter.HighlighTextCore">
+ <summary>
+ this method should be used only by HighlightText or RestoreState methods
+ </summary>
+</member>
+<member name="M:FactEngineForServices.VAQL.TextHighlighter.Unicode(System.Text.StringBuilder)">
+ <summary>
+ added function to convert unicode characters in the stringbuilder to rtf unicode escapes
+ </summary>
+</member>
+<member name="M:FactEngineForServices.VAQL.TextHighlighter.HightlightNode(FactEngineForServices.VAQL.ParseNode,System.Text.StringBuilder)">
+ <summary>
+ inserts the RTF codes to highlight text blocks
+ </summary>
+ <param name="node">the node to highlight, will be appended to sb</param>
+ <param name="sb">the final output string</param>
+</member>
+<member name="M:FactEngineForServices.VAQL.TextHighlighter.HighlightToken(FactEngineForServices.VAQL.Token,System.Text.StringBuilder)">
+ <summary>
+ inserts the RTF codes to highlight text blocks
+ </summary>
+ <param name="token">the token to highlight, will be appended to sb</param>
+ <param name="sb">the final output string</param>
+</member>
+<member name="M:FactEngineForServices.VAQL.Processor.GetParseTreeTokens(System.Object@,FactEngineForServices.VAQL.ParseNode@)">
+ <summary>        
+ORMQL Mode. Gets the tokens from the Parse Tree.
+Walks the ParseTree and finds the tokens as per the Properties/Fields of the ao_object passed to the procedure.
+  i.e. Based on the type of token at the Root of the ParseTree, the software dynamically creates ao_object such that 
+  it contains the tokens that it wants returned.
+ </summary>
+ <param name="ao_object">is of runtime generated type DynamicCollection.Entity</param>
+ <param name="aoParseTreeNode">ParseNode as from VAQL Parser</param>
+ <remarks></remarks>
+</member>
+<member name="F:FactEngineForServices.publicConstants.pcColorValues">
+ <summary>
+ FactEngine uses this to set the Color of each Node based on its OrdinalPostion in the ProjectedColumns/Nodes
+ </summary>
+</member>
+<member name="T:FactEngineForServices.publicConstants.pcenumSoftwareCategory">
+ <summary>
+ This software can be released in either one of two Software Categories, "Student" or "Professional".
+ Features of the software are either enabled or disabled depending on the Software Category assigned to the software.
+ NB Currently stored in RichmondApplication class (default is "Professional").
+ NB Currently set in frmMain.Load method. Must be set before building the software for release..
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:FactEngineForServices.publicConstants.pcenumSpecialDragMode">
+ <summary>
+ Used within a Form/Page to flag when a Form/Page is in a special DragMode based on what the user has dragged to the form.
+   e.g. If the User drags a SupertypeConnector, then the Form/Page is put into the ORMSupertypeConnector DragMode, and
+   the cursor of the ORMModelPage Form/Page is changed to the SupertypeConnnector icon (for the duration of the drag operation).
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="T:FactEngineForServices.publicFBMConstants.pcenumORMDataType">
+ <summary>
+ See DataTypeAttribute Class (above) for how to get the name of an Enum member from its corresponding 
+   DataType attribute 'name'. Used when converting VAQL DataType tokens to ORMDataType enum.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.publicPermutations.publicPermutations.Permutate(System.Int32,System.Collections.Generic.List{System.Object}@,System.Collections.Generic.List{System.Object}@,System.Collections.Generic.List{System.Collections.Generic.List{System.Object}}@)">
+ <summary>
+  
+ </summary>    
+ <param name="aaoElements">Elements() is the array to permutate (remember, this will grow shorter as we work, so the ArrayCount parameter cannot be deduced from the length of Elements).</param>
+ <param name="aaoOrder">Order is the temporary array where we store one permutation</param>
+ <param name="aaoOrders">Orders is the Collection where we store all permutations found.</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.TableConcept.TableConcept.DeleteUnneededConcepts">
+ <summary>
+ Deletes any Concepts no longer required by any Model/Page within Richmond.
+ </summary>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.TableFactTableInstance.zTableFactTableInstance.ModifyKey(FactEngineForServices.FBM.FactTable,System.String)">
+ <summary>
+ Modifies the key of the ModelConceptInstance table.
+   NB IMPORTANT: Does not match on 'PageId' because if the key is changed on one Page in the Model the key must change on all Pages in the Model.
+ </summary>
+ <param name="arFactTableInstance"></param>
+ <param name="as_new_key"></param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.TableFactTypeDerivationText.tableFactTypeDerivationText.ModifyKey(FactEngineForServices.FBM.FactTypeDerivationText,System.String)">
+ <summary>
+ Modifies the key of the ModelConceptInstance table.
+   NB IMPORTANT: Does not match on 'PageId' because if the key is changed on one Page in the Model the key must change on all Pages in the Model.
+ </summary>
+ <param name="arFactTypeDerivationTextInstance"></param>
+ <param name="as_new_key"></param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.TableFactTypeInstance.Table_FactTypeInstance.GetFactTypeInstanceByPage(System.String,FactEngineForServices.FBM.Page@)">
+ <summary>
+   NB Adds the FactTypeInstance to the Page.
+ </summary>
+ <param name="asFactTypeInstanceId"></param>
+ <param name="arPage"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.TableFactTypeName.tableFactTypeName.ModifyKey(FactEngineForServices.FBM.FactTypeName,System.String)">
+ <summary>
+ Modifies the key of the ModelConceptInstance table.
+   NB IMPORTANT: Does not match on 'PageId' because if the key is changed on one Page in the Model the key must change on all Pages in the Model.
+ </summary>
+ <param name="arFactTypeNameInstance"></param>
+ <param name="as_new_key"></param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.TableModelDictionary.TableModelDictionary.ModifySymbol(FactEngineForServices.FBM.Model,FactEngineForServices.FBM.DictionaryEntry,System.String,FactEngineForServices.publicConstants.pcenumConceptType)">
+ <summary>
+ Changes the actual 'Symbol' (i.e. Concept.Symbol) referenced by the ModelDictionaryEntry.
+ See Also: UpdateModelDictionaryEntry function, which does not modify the Symbol.
+ </summary>
+ <param name="arModel">The Model that owns the Model Dictionary</param>
+ <param name="arDictionaryEntry">The Dictionary Entry to be update.</param>
+ <param name="asNewSymbol">The new Symbol for the Dictionary Entry.</param>
+ <param name="aiConceptType">The Concept Type of the Dictionary Entry</param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.TableReferenceFieldValue.TableReferenceFieldValue.GetReferenceFieldValueTuples(System.Int32,System.Object@,FactEngineForServices.ReferenceTable@)">
+ <summary>
+ Gets a list of ReferentTable tuples from the ReferenceFieldValue table.
+   Each Tuple is a dynamic object created at runtime. The returned Tuple objects have the Attributes of the Fields of the ReferenceTable.
+   aoWorkingClass is set to a sample of the makeup of the Tuples returned and can be viewed at debug time to see the name of the Attributes/Fields of each Tuple.
+ </summary>
+ <param name="aiReferenceTableId">The unique id of the ReferenceTable in the ReferenceTable table.</param>
+ <param name="aoWorkingClass">Is set to a sample of the makeup of the Tuples returned</param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.TableRoleConstraint.TableRoleConstraint.AddRoleConstraint(FactEngineForServices.FBM.RoleConstraint)">
+ <summary>
+ Creates a record in the MetaModelRoleConstraint table.
+ </summary>
+ <param name="arRoleConstraint"></param>
+ <remarks></remarks>
+</member>
+<member name="M:FactEngineForServices.TableSubtypeRelationship.Table_SubtypeRelationship.GetSubtypeInstancesByPage(FactEngineForServices.FBM.Page@)">
+ <summary>
+ Gets the SubtypeInstances by Page.
+ NB Only returns those where both the EntityType and ParentEntityType are both on the Page.
+ </summary>
+ <param name="arPage"></param>
+ <returns></returns>
+ <remarks></remarks>
+</member>
+</members>
+</doc>

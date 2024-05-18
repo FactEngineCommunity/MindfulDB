@@ -197,6 +197,8 @@ Namespace Graph
 
             For Each lrTable In larPGSRelationTable
 
+                lrTable.isPGSRelation = True
+
                 If lrTable.FBMModelElement Is Nothing Then
 #Region "Without FBMModelElement"
 
@@ -333,8 +335,23 @@ Namespace Graph
 
                 Dim lsEntityId As String = lrTable.Name
                 If lrTable.isPGSRelation Then
-                    Dim lrFactType As FBM.FactType = CType(lrTable.FBMModelElement, FBM.FactType)
-                    lsEntityId = lrFactType.RoleGroup(0).JoinedORMObject.Id & "@" & lrTable.Name & "@" & lrFactType.RoleGroup(1).JoinedORMObject.Id
+                    If lrTable.FBMModelElement Is Nothing Then
+
+                        Dim larRelation = (From Column In lrTable.getPrimaryKeyColumns
+                                           Select Column.Relation(0)).Distinct
+
+                        Dim lsOriginTableName = ""
+                        Dim lsDestinationTableName = ""
+
+                        lsOriginTableName = larRelation(0).DestinationTable.Name
+                        lsDestinationTableName = larRelation(1).DestinationTable.Name
+
+                        lsEntityId = lsOriginTableName & "@" & lrTable.Label & "@" & lsDestinationTableName
+                    Else
+                        Dim lrFactType As FBM.FactType = CType(lrTable.FBMModelElement, FBM.FactType)
+                        lsEntityId = lrFactType.RoleGroup(0).JoinedORMObject.Id & "@" & lrTable.Name & "@" & lrFactType.RoleGroup(1).JoinedORMObject.Id
+                    End If
+
                 End If
 
                 Dim tableDescriptor As New SQLTableDescriptor With {
